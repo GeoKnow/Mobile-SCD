@@ -22,7 +22,7 @@ body {
 }
 
 .sup-list {
-  margin: 0 1em;
+  margin: 0 0;
 }
 
 .supplier {
@@ -140,8 +140,10 @@ body {
     display: none;
 }*/
 
-.container {
+@media only screen and (max-width: 400px) {
+  .col-sm-6 {
     padding: 0 0;
+  }
 }
 
 /* ------------------------------------
@@ -173,13 +175,15 @@ Supplier styles
   border-bottom: 1px solid #C6C6C6;
 }
 
-.sup-suppliers {
+.sup-suppliers, .sup-coordinates {
   border-bottom: none;
 }
 
 .sup-info-icon {
   text-align: center;
-  min-width: 3em;
+  min-width: 4em;
+  width: 4em;
+  border-right: 1px solid #C6C6C6;
 }
 
 .sup-info-icon i {
@@ -192,7 +196,7 @@ Supplier styles
 .sup-titles {
   text-align: left;
   min-width: 6.5em;
-  margin-left: 0.5em;
+  margin-left: 1em;
 }
 
 .sup-titles p, .sup-info p {
@@ -203,7 +207,7 @@ Supplier styles
 .sup-info {
   flex-grow: 1;
   text-align: right;
-  padding-right: 0.1em;
+  padding-right: 0.5em;
 }
 
 .sup-suppliers-title {
@@ -217,7 +221,7 @@ Supplier styles
 }
 
 .sup-suppliers-items {
-    margin-left: 3.625em;
+    margin-left: 5em;
     display: none;
 }
 
@@ -225,6 +229,10 @@ Supplier styles
   flex-grow: 1;
   text-align: right;
   margin-right: 0.5em;
+}
+
+.sup-info-icon.sup-expand {
+  border-right: none;
 }
 
 /* ------------------------------------
@@ -265,6 +273,7 @@ Header styles
     font-weight: bold;
     /*margin-top: -0.125em;*/
     color: white;
+    overflow-x: hidden;
 }
 
 .nav-controls {
