@@ -1,0 +1,10 @@
+<script type="text/ng-template" id="suppliers-tree-template.html">
+    <div class="sup-tree-item" ng-class="{ current: sups.isCurrent(data) }">{{ data.name }}</div>
+    <ul class="sup-ul" ng-if="data.suppliers.length > 0">
+        <li ng-repeat="data in data.suppliers" ng-include="'suppliers-tree-template.html'"></li>
+    </ul>
+</script>
+
+<ul class="sup-ul sup-ul-top">
+    <li ng-repeat="data in sups.supTree" ng-include="'suppliers-tree-template.html'"></li>
+</ul>

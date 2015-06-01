@@ -1,0 +1,78 @@
+<div class="sup-coordinates" ng-hide="sups.currentSupplier.parent === null">
+    <div class="sup-info-icon">
+        <i class="glyphicon glyphicon-map-marker"></i>
+    </div>
+    <div class="sup-titles">
+        <p>
+            <b>Latitude:  <br>
+            Longitude: </b>
+        </p>
+    </div>
+    <div class="sup-info">
+        <p>
+            {{ sups.currentSupplier.latitude }} <br>
+            {{ sups.currentSupplier.longitude }}
+        </p>
+    </div>
+</div>
+
+<div class="sup-address" ng-hide="sups.currentSupplier.parent === null">
+    <div class="sup-info-icon">
+        <i class="glyphicon glyphicon-home"></i>
+    </div>
+
+    <div class="sup-titles">
+        <p>
+            <b>Street:  <br>
+            Zip, City: </b>
+        </p>
+    </div>
+    <div class="sup-info">
+        <p>
+            {{ sups.currentSupplier.street }} <br>
+            {{ sups.currentSupplier.zipcode }}, {{ sups.currentSupplier.city }}
+        </p>
+    </div>
+</div>
+
+<div class="sup-suppliers" ng-hide="sups.currentSupplier.suppliers.length < 1">
+    <div class="sup-info-icon">
+        <i class="glyphicon glyphicon-send"></i>
+    </div>
+    <div class="sup-titles">
+        <span class="sup-suppliers-title">Suppliers</span>
+        <span class="badge">{{sups.currentSupplier.suppliers.length}}</span>
+    </div>
+    <div class="sup-info-icon sup-expand">
+        <i class="glyphicon glyphicon-menu-down"></i>
+    </div>
+</div>
+<div class="sup-suppliers-items">
+    <div ng-repeat="sup in sups.currentSupplier.suppliers" ng-click="sups.selectSupplier(sup)">
+        {{ sup.name }}
+    </div>
+</div>
+
+<!-- <div>
+    <div class="sup-suppliers" ng-hide="sups.currentSupplier.suppliers.length < 1">
+        <div class="sup-suppliers-header">
+            <div class="sup-info-icon">
+                <i class="glyphicon glyphicon-send"></i>
+            </div>
+            <div class="sup-titles">
+                <span class="sup-suppliers-title">Suppliers</span>
+                <div class="sup-number">
+                    <span class="badge">{{sups.currentSupplier.suppliers.length}}</span>
+                </div>
+            </div>
+            <div class="sup-info-icon cell-right">
+                <i class="glyphicon glyphicon-menu-down"></i>
+            </div>
+        </div>
+    </div>
+    <div class="sup-suppliers-items">
+        <div ng-repeat="sup in sups.currentSupplier.suppliers" ng-click="sups.selectSupplier(sup)">
+            {{ sup.name }}
+        </div>
+    </div>
+</div> -->

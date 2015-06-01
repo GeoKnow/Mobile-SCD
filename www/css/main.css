@@ -1,0 +1,308 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : Apr 29, 2015, 2:59:10 PM
+    Author     : vukm
+*/
+*, *:after, *:before {
+/*    font-family: Verdana, Geneva, sans-serif;*/
+}
+
+/*rgb(88, 131, 219)*/
+
+.snap-content {
+  background: white;
+}
+
+body {
+  /*font-size: 16px;*/
+}
+
+.sup-list {
+  margin: 0 1em;
+}
+
+.supplier {
+/*    border: solid;
+    border-width: 1px;*/
+    box-sizing: border-box;
+    margin: 16px 0px;
+    box-shadow: 0px 0px 5px #333333;
+}
+
+/*.supplier .sup-title {
+    padding-left: 6px;
+    border-left-color: #2491FB;
+    border-left-style: solid;
+    border-left-width: 4px;
+}
+
+.sup-title .title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.sup-title .address, .sup-title .city {
+    color: #A7A7A7;
+}
+
+.sup-details {
+    display: none;
+    background: #EDEDED;
+    padding: 10px;
+}
+
+.supplier p {
+    display: inline-table;
+    vertical-align: top;
+    min-width: 160px;
+    margin: auto;
+}
+
+.sup-ul {
+    list-style: none;
+}
+
+.sup-tree {
+    border: #A7A7A7 thin;
+}
+
+.header {
+    background: #D0D5D7;
+    padding: 1.5em;
+}
+
+.btn {
+    margin-top: -0.125em;
+    text-transform: uppercase;
+}
+
+.sup-info-icon {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 10px;
+    color: #57C3E7;
+    width: 4em;
+    text-align: center;
+}
+
+.sup-info-icon .glyphicon {
+    font-size: 2em;
+    padding-top: 0.142857em;
+}
+
+.sup-info, .sup-titles, .sup-suppliers-title {
+    display: table-cell;
+}
+
+.sup-info p, .sup-titles p {
+    margin-bottom: 0;
+}
+
+.sup-titles {
+    width: 9em;
+    padding-left: 10px;
+}
+
+.sup-suppliers-title {
+    font-size: 2em;
+    padding-left: 8px;
+}
+
+.sup-coordinates, .sup-address, .sup-suppliers{
+    vertical-align: middle;
+    border-bottom: 1px solid #A7A7A7;
+    height: 4.571429em;
+    padding: 0.714286em 0;
+}
+
+.sup-suppliers {
+    border: none;
+}
+
+.cell-right {
+    width: 100%;
+    text-align: right;
+}
+
+.sup-number {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 1.5em;
+    padding-left: 15px;
+}
+
+.sup-suppliers-items {
+    margin-left: 4.8em;
+    display: none;
+}*/
+
+.container {
+    padding: 0 0;
+}
+
+/* ------------------------------------
+
+Tree styles
+
+------------------------------------ */
+
+.sup-ul {
+    list-style: none;
+}
+
+.sup-tree {
+    border: #A7A7A7 thin;
+    line-height: 1.2;
+}
+
+/* ------------------------------------
+
+Supplier styles
+
+------------------------------------ */
+
+.sup-coordinates, .sup-address, .sup-suppliers {
+  display: flex;
+  height: 4em;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid #C6C6C6;
+}
+
+.sup-suppliers {
+  border-bottom: none;
+}
+
+.sup-info-icon {
+  text-align: center;
+  min-width: 3em;
+}
+
+.sup-info-icon i {
+  font-size: 1.714286em;
+  color: #57C3E7;
+  padding-top: 0.125em;
+  padding-right: 0.125em;
+}
+
+.sup-titles {
+  text-align: left;
+  min-width: 6.5em;
+  margin-left: 0.5em;
+}
+
+.sup-titles p, .sup-info p {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.sup-info {
+  flex-grow: 1;
+  text-align: right;
+  padding-right: 0.1em;
+}
+
+.sup-suppliers-title {
+  font-size: 1.571429em;
+}
+
+.sup-suppliers .sup-titles .badge {
+  font-size: 0.857143em;
+  position: relative;
+  top: -0.125em;
+}
+
+.sup-suppliers-items {
+    margin-left: 3.625em;
+    display: none;
+}
+
+.sup-expand {
+  flex-grow: 1;
+  text-align: right;
+  margin-right: 0.5em;
+}
+
+/* ------------------------------------
+
+Header styles
+
+------------------------------------ */
+
+.nav-sups {
+    display: flex;
+    height: 4em;
+    align-items: center;
+    background: #57C3E7;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.nav-below {
+    margin-top: 4em;
+}
+
+.nav-sups a {
+    font-size: 1.142857em;
+    margin: 0 0.25em;
+    color: white;
+    cursor: pointer;
+}
+
+.nav-sups a:last-child {
+    margin-right: 0.5em;
+}
+
+.nav-title {
+    font-size: 1.142857em;
+    font-weight: bold;
+    /*margin-top: -0.125em;*/
+    color: white;
+}
+
+.nav-controls {
+    flex-grow: 1;
+    text-align: right;
+    min-width: 6.5em;
+}
+
+/* -----------------------------------
+
+Suppliers tree styles
+
+----------------------------------- */
+
+.sup-tree-item {
+  cursor: pointer;
+  color: inherit;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 0.25em 0.5em;
+}
+
+.sup-tree-item.current {
+  background: #D0D5D7;
+  background: #57C3E7;
+  font-weight: bold;
+  color: white;
+}
+
+.sup-ul {
+  padding-left: 1.5em;
+}
+
+.sup-ul-top {
+  margin-top: 0.5em;
+  padding-left: 0;
+}

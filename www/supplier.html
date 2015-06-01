@@ -1,0 +1,13 @@
+<!-- SuppliersController is represented with sups variable -->
+<div class="supplier">
+    <div class="sup-title">
+        <span class="title">{{ supplier.name }}</span><br/>
+        <span class="address">{{ supplier.street }}</span><br/>
+        <span class="city">{{ supplier.city }}</span>
+    </div>
+    <div class="sup-details" ng-click="sups.showSupplier(supplier)">
+        <p>Zip: <br/> {{ supplier.zipcode }} </p>
+        <p>Latitude: <br/> {{ supplier.latitude }} </p>
+        <p>Longitude: <br/> {{ supplier.longitude }} </p>
+    </div>
+</div>

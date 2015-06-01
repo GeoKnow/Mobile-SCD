@@ -1,0 +1,21 @@
+/////////////////////////////////
+// showSupplier
+/////////////////////////////////
+
+PREFIX xmo: <http://www.xybermotive.com/ontology/> 
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#l> 
+
+SELECT DISTINCT ?supplier ?lat ?long ?city ?name ?street ?zip ?label 
+WHERE { 
+  ?supplier a xmo:Supplier . 
+  OPTIONAL { ?supplier geo:lat ?lat . } 
+  OPTIONAL { ?supplier geo:long ?long . } 
+  OPTIONAL { ?supplier xmo:city ?city . } 
+  OPTIONAL { ?supplier xmo:name ?name . } 
+  OPTIONAL { ?supplier xmo:street ?street . } 
+  OPTIONAL { ?supplier xmo:zipcode ?zip . } 
+  OPTIONAL { ?supplier rdfs:label ?label . } 
+  ?conn xmo:receiver <http://www.xybermotive.com/supplier/FairPhone-8977c1bf-a699-4b9c-87e8-5d4cf5d474b3> . 
+  ?conn xmo:sender ?supplier .
+}

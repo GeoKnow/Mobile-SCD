@@ -1,0 +1,12 @@
+function btnClicked() {
+  alert("Button clicked!");
+  cordova.plugins.notification.local.schedule({
+    id: 1,
+    title: "Production Jour fixe",
+    text: "Duration 1h",
+    //icon: "http://icons.com/?cal_id=1",
+    data: { meetingId:"123#fg8" }
+  });
+}
+
+
