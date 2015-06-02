@@ -26,16 +26,7 @@ and open the template in the editor.
             </div>
         </div-->
 
-        <div class="snap-drawers">
-          <div class="snap-drawer snap-drawer-left">
-          </div>
-          <div class="snap-drawer snap-drawer-right">
-            <div class="sup-tree">
-              <suppliers-tree></suppliers-tree>
-            </div>
-          </div>
-        </div>
-        <div id="snapContent" class="snap-content" tree-drawer>
+
 
         <div class="nav-sups">
             <a class="nav-back" ng-click="sups.levelUp()"><i class="glyphicon glyphicon-menu-left"></i></a>
@@ -46,7 +37,18 @@ and open the template in the editor.
                 <a ng-click="sups.getSuppliersTree();"><i class="glyphicon glyphicon-refresh"></i></a>
             </div>
         </div>
-        <div class="container nav-below">
+
+        <div class="snap-drawers" style="margin-top: 4em">
+          <div class="snap-drawer snap-drawer-left">
+          </div>
+          <div class="snap-drawer snap-drawer-right">
+            <div class="sup-tree">
+              <suppliers-tree></suppliers-tree>
+            </div>
+          </div>
+        </div>
+        <div id="snapContent" class="snap-content container nav-below" tree-drawer>
+
             <section class="sup-list">
                 <div class="row">
                     <div class="sup-tree col-sm-6 hidden-xs">
@@ -56,9 +58,8 @@ and open the template in the editor.
                         <!--supplier-item ng-repeat="supplier in sups.currentSuppliers" ng-animate></supplier-item-->
                         <current-supplier></current-supplier>
                     </div>
-                <!--/div-->
+                </div>
             </section>
-        </div>
 
         </div>
 
