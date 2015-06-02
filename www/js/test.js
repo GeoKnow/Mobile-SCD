@@ -204,11 +204,11 @@
         };
 
         ctrl.isCurrent = function(supplier){
-          return supplier === ctrl.currentSupplier;
+            return supplier === ctrl.currentSupplier;
         };
 
         ctrl.toggleTreeView = function(){
-          $scope.snapper.open('right');
+            $scope.snapper.open('right');
         }
     }]);
 
@@ -235,9 +235,9 @@
             restrict: "E",
             templateUrl: "suppliers-tree.html",
             link: function(scope, element) {
-              $(element).on('click', '.sup-tree-item', function(){
-                $(this).siblings('ul').slideToggle();
-              });
+                $(element).on('click', '.sup-tree-item', function(){
+                    $(this).siblings('ul').slideToggle();
+                });
             }
         };
     });
@@ -259,17 +259,17 @@
     });
 
     app.directive("treeDrawer", function($timeout) {
-      return function(scope, element) {
-        $timeout(function(){
-          var settings = {
-            element: element[0],
-            disable: 'left',
-            tapToClose: true
-          };
-          scope.snapper = new Snap(settings);
-          // scope.snapper.open('right');
-        });
-      }
+        return function(scope, element) {
+            $timeout(function(){
+                var settings = {
+                    element: element[0],
+                    disable: 'left',
+                    tapToClose: true
+                };
+                scope.snapper = new Snap(settings);
+                // scope.snapper.open('right');
+            });
+        }
     })
 })();
 

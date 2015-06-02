@@ -141,9 +141,9 @@ body {
 }*/
 
 @media only screen and (max-width: 400px) {
-  .col-sm-6 {
-    padding: 0 0;
-  }
+    .col-sm-6 {
+        padding: 0 0;
+    }
 }
 
 /* ------------------------------------
@@ -168,56 +168,56 @@ Supplier styles
 ------------------------------------ */
 
 .sup-coordinates, .sup-address, .sup-suppliers {
-  display: flex;
-  height: 4em;
-  align-items: center;
-  width: 100%;
-  border-bottom: 1px solid #C6C6C6;
+    display: flex;
+    height: 4em;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #C6C6C6;
 }
 
 .sup-suppliers, .sup-coordinates {
-  border-bottom: none;
+    border-bottom: none;
 }
 
 .sup-info-icon, .sup-suppliers-item-icon {
-  text-align: center;
-  min-width: 4em;
-  width: 4em;
-  border-right: 1px solid #C6C6C6;
+    text-align: center;
+    min-width: 4em;
+    width: 4em;
+    border-right: 1px solid #C6C6C6;
 }
 
 .sup-info-icon i {
-  font-size: 1.714286em;
-  color: #57C3E7;
-  padding-top: 0.125em;
-  padding-right: 0.125em;
+    font-size: 1.714286em;
+    color: #57C3E7;
+    padding-top: 0.125em;
+    padding-right: 0.125em;
 }
 
 .sup-titles {
-  text-align: left;
-  min-width: 6.5em;
-  margin-left: 1em;
+    text-align: left;
+    min-width: 6.5em;
+    margin-left: 1em;
 }
 
 .sup-titles p, .sup-info p {
-  margin-bottom: 0;
-  margin-top: 0;
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
 .sup-info {
-  flex-grow: 1;
-  text-align: right;
-  padding-right: 0.5em;
+    flex-grow: 1;
+    text-align: right;
+    padding-right: 0.5em;
 }
 
 .sup-suppliers-title {
-  font-size: 1.571429em;
+    font-size: 1.571429em;
 }
 
 .sup-suppliers .sup-titles .badge {
-  font-size: 0.857143em;
-  position: relative;
-  top: -0.125em;
+    font-size: 0.857143em;
+    position: relative;
+    top: -0.125em;
 }
 
 .sup-suppliers-items {
@@ -226,54 +226,54 @@ Supplier styles
 }
 
 .sup-suppliers-item {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin: 1em 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 1em 0;
 }
 
 .sup-suppliers-item-name {
-  margin-left: 1em;
+    margin-left: 1em;
 }
 
 .sup-suppliers-item .glyphicon {
-  padding-top: 0.125em;
+    padding-top: 0.125em;
 }
 
 .sup-suppliers-item .glyphicon.glyphicon-ok-sign {
-  color: #57C3E7;
-  font-size: 1.285714em;
+    color: #57C3E7;
+    font-size: 1.285714em;
 }
 
 .sup-expand {
-  flex-grow: 1;
-  text-align: right;
-  margin-right: 0.5em;
+    flex-grow: 1;
+    text-align: right;
+    margin-right: 0.5em;
 }
 
 .sup-info-icon.sup-expand {
-  border-right: none;
+    border-right: none;
 }
 
 /* ------------- Block styles -------------*/
 
 .sup-block {
-  border: 1px solid lightgray;
-  margin: 1em 0.5em;
-  box-shadow: 0 0 0.5em lightgray;
-  background: white;
+    border: 1px solid lightgray;
+    margin: 1em 0.5em;
+    box-shadow: 0 0 0.5em lightgray;
+    background: white;
 }
 
 .sup-block-header {
-  padding: 1em;
-  /*background: #00AED4;*/
-  background: #57C3E7;
-  color: white;
-  font-weight: bold;
+    padding: 1em;
+    /*background: #00AED4;*/
+    background: #57C3E7;
+    color: white;
+    font-weight: bold;
 }
 
 .sup-block-content {
-  background: white;
+    background: white;
 }
 
 /* ------------------------------------
@@ -332,29 +332,29 @@ Suppliers tree styles
 ----------------------------------- */
 
 .sup-tree-item {
-  cursor: pointer;
-  color: inherit;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  padding: 0.25em 0.5em;
+    cursor: pointer;
+    color: inherit;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 0.25em 0.5em;
 }
 
 .sup-tree-item.current {
-  background: #D0D5D7;
-  background: #57C3E7;
-  font-weight: bold;
-  color: white;
+    background: #D0D5D7;
+    background: #57C3E7;
+    font-weight: bold;
+    color: white;
 }
 
 .sup-ul {
-  padding-left: 1.5em;
+    padding-left: 1.5em;
 }
 
 .sup-ul-top {
-  margin-top: 0.5em;
-  padding-left: 0;
+    margin-top: 0.5em;
+    padding-left: 0;
 }
