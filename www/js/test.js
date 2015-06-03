@@ -4,6 +4,17 @@
     /////////////////////////////////////
     // Controllers
     /////////////////////////////////////
+
+    /////////////////////////////////////
+    // http://tiles.lyrk.org/ls/{z}/{x}/{y}?apikey=87be57815cf747a58ec5d84d8e64ccfa
+    /////////////////////////////////////
+
+    /////////////////////////////////////
+    // HERE Maps credentials
+    // App_Id: INhWcYWOEBUd1djZetDO
+    // App_Code: vUsfPezonTcM0FKG58vYRw
+    /////////////////////////////////////
+
     app.controller("SuppliersController", ['$scope', '$http', '$timeout', function($scope, $http, $timeout){
         var ctrl = this;
 
@@ -104,6 +115,23 @@
                         supplier.uri = results[s].supplier.value;
                         supplier.suppliers = [];
                         supplier.parent = sup;
+                        supplier.metrics = [
+                            {
+                                name: "Metric 1",
+                                value: 97.8,
+                                threshold: 95.0
+                            },
+                            {
+                                name: "Metric 2",
+                                value: 92.6,
+                                threshold: 93.0
+                            },
+                            {
+                                name: "Metric 3",
+                                value: 96.5,
+                                threshold:91.0
+                            }
+                        ];
                         supList.push(supplier);
                         /*sup.suppliers.push(supplier);*/
                     }
@@ -150,6 +178,23 @@
                     supplier.uri = results[s].supplier.value;
                     supplier.suppliers = [];
                     supplier.parent = ctrl.virtualSupplier;
+                    supplier.metrics = [
+                        {
+                            name: "Metric 1",
+                            value: 97.8,
+                            threshold: 95.0
+                        },
+                        {
+                            name: "Metric 2",
+                            value: 92.6,
+                            threshold: 93.0
+                        },
+                        {
+                            name: "Metric 3",
+                            value: 96.5,
+                            threshold:91.0
+                        }
+                    ];
                     sups.push(supplier);
                 }
                 $timeout(function (){
@@ -270,7 +315,35 @@
                 // scope.snapper.open('right');
             });
         }
-    })
+    });
+
+    app.directive("supMapSmall", function($timeout) {
+        return function(scope, element) {
+            $timeout(function() {
+                var coordinates = [scope.sups.currentSupplier.latitude,
+                    scope.sups.currentSupplier.longitude];
+                scope.supMapSmall = L.map('supMapSmall', {
+                    zoomControl: false
+                }).setView(coordinates, 15);
+                L.tileLayer('http://tiles.lyrk.org/ls/{z}/{x}/{y}?apikey=87be57815cf747a58ec5d84d8e64ccfa', {
+                    detectRetina: true,
+                    maxZoom: 19,
+                    reuseTiles: true
+                }).addTo(scope.supMapSmall);
+                scope.supMapSmallLayer = L.featureGroup();
+                scope.supMapSmallLayer.addTo(scope.supMapSmall);
+                L.marker(coordinates).addTo(scope.supMapSmall);
+                scope.$watch('sups.currentSupplier', function(){
+                    var coordinates = [scope.sups.currentSupplier.latitude,
+                        scope.sups.currentSupplier.longitude];
+                    scope.supMapSmall.setView(coordinates, 15);
+                    // scope.supMapSmall.clearLayers();
+                    scope.supMapSmallLayer.clearLayers();
+                    L.marker(coordinates).addTo(scope.supMapSmallLayer);
+                });
+            });
+        }
+    });
 })();
 
 $(document).ready(function (){

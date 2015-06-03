@@ -3,6 +3,7 @@
         Location
     </div>
     <div class="sup-block-content">
+        <div ng-if="sups.currentSupplier.parent !== null" class="sup-map" id="supMapSmall" sup-map-small></div>
         <div class="sup-coordinates" ng-hide="sups.currentSupplier.parent === null">
             <div class="sup-info-icon">
                 <i class="glyphicon glyphicon-map-marker"></i>
@@ -15,7 +16,7 @@
             </div>
             <div class="sup-info">
                 <p>
-                    {{ sups.currentSupplier.latitude }} <br>
+                    {{ sups.currentSupplier.latitude }}<br>
                     {{ sups.currentSupplier.longitude }}
                 </p>
             </div>
@@ -34,7 +35,7 @@
             </div>
             <div class="sup-info">
                 <p>
-                    {{ sups.currentSupplier.street }} <br>
+                    {{ sups.currentSupplier.street }}<br>
                     {{ sups.currentSupplier.zipcode }}, {{ sups.currentSupplier.city }}
                 </p>
             </div>
@@ -42,7 +43,7 @@
     </div>
 </div>
 
-<div class="sup-block" ng-show="sups.currentSupplier.suppliers.length > 0">
+<div class="sup-block" ng-if="sups.currentSupplier.suppliers.length > 0">
     <div class="sup-block-header">
         <span>Suppliers</span>
         <span class="badge">{{sups.currentSupplier.suppliers.length}}</span>
@@ -53,6 +54,21 @@
                 <i class="glyphicon glyphicon-ok-sign"></i>
             </div>
             <span class="sup-suppliers-item-name">{{ sup.name }}</span>
+        </div>
+    </div>
+</div>
+
+<div class="sup-block" ng-if="sups.currentSupplier.metrics.length > 0">
+    <div class="sup-block-header">
+        <span>Metrics</span>
+    </div>
+    <div class="sup-block-content">
+        <div class="sup-metric" ng-repeat="m in sups.currentSupplier.metrics">
+            <div class="sup-metric-icon">
+                <i class="glyphicon" ng-class="{ 'glyphicon-ok-sign': m.value >= m.threshold, 'glyphicon-fire': m.value < m.threshold }"></i>
+            </div>
+            <span class="sup-metric-name">{{ m.name }}</span>
+            <span class="sup-metric-value">{{ m.value }}%</span>
         </div>
     </div>
 </div>

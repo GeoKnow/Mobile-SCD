@@ -175,11 +175,15 @@ Supplier styles
     border-bottom: 1px solid #C6C6C6;
 }
 
+.sup-map {
+    height: 10em;
+}
+
 .sup-suppliers, .sup-coordinates {
     border-bottom: none;
 }
 
-.sup-info-icon, .sup-suppliers-item-icon {
+.sup-info-icon, .sup-suppliers-item-icon, .sup-metric-icon {
     text-align: center;
     min-width: 4em;
     width: 4em;
@@ -225,24 +229,34 @@ Supplier styles
     display: none;
 }
 
-.sup-suppliers-item {
+.sup-suppliers-item, .sup-metric {
     display: flex;
     align-items: center;
     width: 100%;
     margin: 1em 0;
 }
 
-.sup-suppliers-item-name {
+.sup-suppliers-item-name, .sup-metric-name {
     margin-left: 1em;
 }
 
-.sup-suppliers-item .glyphicon {
+.sup-suppliers-item .glyphicon, .sup-metric .glyphicon {
     padding-top: 0.125em;
 }
 
-.sup-suppliers-item .glyphicon.glyphicon-ok-sign {
+.sup-suppliers-item .glyphicon.glyphicon-ok-sign, .sup-metric .glyphicon {
     color: #57C3E7;
     font-size: 1.285714em;
+}
+
+.sup-metric .glyphicon.glyphicon-fire {
+    color: #ED851F;
+}
+
+.sup-metric-value {
+    flex-grow: 1;
+    text-align: right;
+    margin-right: 1em;
 }
 
 .sup-expand {
