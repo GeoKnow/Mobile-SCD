@@ -146,6 +146,32 @@ body {
     }
 }
 
+.sup-map-large-container {
+    height: 100%;
+    width: 100%;
+    padding-top: 4em;
+    /*display: none; /* should do this after map is added to the div */*/
+    position: absolute;
+    z-index: 5;
+    bottom: 0px;
+}
+
+.sup-map-large {
+    height: 100%;
+    width: 100%;
+    z-index: 5;
+    /*padding-top: 1.5em;*/
+}
+
+.sup-map-large-nav {
+    position: relative;
+    height: 1.5em;
+    text-align: center;
+    background: #C6C6C6;
+    z-index: 5;
+    color: #57C3E7;
+}
+
 /* ------------------------------------
 
 Tree styles

@@ -337,9 +337,45 @@
                     var coordinates = [scope.sups.currentSupplier.latitude,
                         scope.sups.currentSupplier.longitude];
                     scope.supMapSmall.setView(coordinates, 15);
-                    // scope.supMapSmall.clearLayers();
                     scope.supMapSmallLayer.clearLayers();
                     L.marker(coordinates).addTo(scope.supMapSmallLayer);
+                });
+            });
+            $(element).closest('.sup-block').find('.sup-block-header').click(function(event) {
+                $('#supMapLarge').closest('.sup-map-large-container').slideToggle();
+                scope.supMapLargeLayer.clearLayers();
+                var coordinates = [scope.sups.currentSupplier.latitude,
+                    scope.sups.currentSupplier.longitude];
+                scope.supMapLarge.setView(coordinates, 14);
+                var icon = L.MakiMarkers.icon({icon: 'star', color: '#F05D00', size: 'l'});
+                L.marker(coordinates, { icon: icon }).addTo(scope.supMapLargeLayer);
+                var iconSuppliers = L.MakiMarkers.icon({icon: 'gift', color: '#00AED4', size:'m'});
+                $.each(scope.sups.currentSupplier.suppliers, function(index, sup) {
+                    var coord = [sup.latitude, sup.longitude];
+                    L.marker(coord, {icon: iconSuppliers}).addTo(scope.supMapLargeLayer);
+                });
+            });
+        }
+    });
+
+    app.directive('supMapLarge', function($timeout) {
+        return function(scope, element) {
+            $timeout(function() {
+                scope.supMapLarge = L.map('supMapLarge', {
+                    zoomControl: false
+                }).setView([53.2, 12.3], 15);
+                L.tileLayer('http://tiles.lyrk.org/ls/{z}/{x}/{y}?apikey=87be57815cf747a58ec5d84d8e64ccfa', {
+                    detectRetina: true,
+                    maxZoom: 19,
+                    reuseTiles: true
+                }).addTo(scope.supMapLarge);
+                scope.supMapLargeLayer = L.featureGroup();
+                scope.supMapLargeLayer.addTo(scope.supMapLarge);
+                $(element).closest('.sup-map-large-container').css({
+                    display: 'none'
+                });
+                $(element).closest('.sup-map-large-container').find('.sup-map-large-nav').on('click', function(event) {
+                    $(element).closest('.sup-map-large-container').slideToggle();
                 });
             });
         }
