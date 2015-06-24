@@ -26,11 +26,12 @@
         };
         ctrl.currentSupplier = ctrl.virtualSupplier;
 
-
+        ctrl.searchPhrase = "";
         ctrl.curSup = null;
         ctrl.curLevel = -1;
         ctrl.suppliers = [];
         ctrl.topSuppliers = [];
+        ctrl.suppliersArray = [];
         ctrl.currentSuppliers = [];
         ctrl.defaultGraph = "http://mobile-scm/dump/";
         ctrl.defaultGraphParam = "default-graph-uri";
@@ -132,12 +133,31 @@
                                 threshold:91.0
                             }
                         ];
+                        console.log(supplier.name);
+                        if (supplier.name === "Fairphone_OS Supplier") {
+                            console.log('shippings are being added');
+                            supplier.shippings = [
+                                {
+                                    incomming: true,
+                                    other: "Supplier X",
+                                    quantity: 3,
+                                    product: "ProductX"
+                                },
+                                {
+                                    incomming: false,
+                                    other: "Supplier Y",
+                                    quantity: 4,
+                                    product: "ProductY"
+                                }
+                            ];
+                        }
                         supList.push(supplier);
                         /*sup.suppliers.push(supplier);*/
                     }
                     $timeout(function(){
 //                        alert("Adding to " + sup.name + " " + supList.length + " suppliers");
                         sup.suppliers = supList;
+                        ctrl.suppliersArray.push(sup);
                         if (sup.suppliers !== null && sup.suppliers.length > 0)
                             ctrl.populateTree(sup.suppliers);
                     }, 0);
@@ -238,8 +258,9 @@
         };
 
         ctrl.selectSupplier = function(sup) {
-            $('.sup-suppliers-items').css({ "display": "none" });
+            // $('.sup-suppliers-items').css({ "display": "none" });
             ctrl.currentSupplier = sup;
+            $scope.snapper.close();
         };
 
         ctrl.levelUp = function() {
@@ -254,6 +275,11 @@
 
         ctrl.toggleTreeView = function(){
             $scope.snapper.open('right');
+        }
+
+        ctrl.trackShipping = function(s){
+            if (s.tracked) s.tracked = false;
+            else s.tracked = true;
         }
     }]);
 
@@ -280,11 +306,19 @@
             restrict: "E",
             templateUrl: "suppliers-tree.html",
             link: function(scope, element) {
-                $(element).on('click', '.sup-tree-item', function(){
-                    $(this).siblings('ul').slideToggle();
-                });
+                // expand and collapse tree nodes
+                // $(element).on('click', '.sup-tree-item', function(){
+                //     $(this).siblings('ul').slideToggle();
+                // });
             }
         };
+    });
+
+    app.directive("mainMenu", function(){
+        return {
+            restrict: "E",
+            templateUrl: "main-menu.html"
+        }
     });
 
     app.directive("currentSupplier", function(){
@@ -299,6 +333,9 @@
                     alert('Pressed');
                     $(this).css({ "display": "none" });
                 });
+                // $(element).on('click', '.sup-shipping-star', function(){
+                //     $(this).find('.glyphicon-star').toggleClass('selected');
+                // });
             }
         };
     });
@@ -308,7 +345,7 @@
             $timeout(function(){
                 var settings = {
                     element: element[0],
-                    disable: 'left',
+                    // disable: 'left',
                     tapToClose: true
                 };
                 scope.snapper = new Snap(settings);

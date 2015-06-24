@@ -1,10 +1,27 @@
-<script type="text/ng-template" id="suppliers-tree-template.html">
-    <div class="sup-tree-item" ng-class="{ current: sups.isCurrent(data) }">{{ data.name }}</div>
-    <ul class="sup-ul" ng-if="data.suppliers.length > 0">
-        <li ng-repeat="data in data.suppliers" ng-include="'suppliers-tree-template.html'"></li>
-    </ul>
-</script>
+<input id="supSearchBox" class="sup-search-box" type="text"
+    ng-model="sups.searchPhrase" placeholder="Search...">
+</input>
 
-<ul class="sup-ul sup-ul-top">
-    <li ng-repeat="data in sups.supTree" ng-include="'suppliers-tree-template.html'"></li>
-</ul>
+<div class="sup-search-results" ng-show="sups.searchPhrase.length">
+    <ul class="sup-search-list">
+        <li class="sup-tree-item" ng-repeat="s in sups.suppliersArray | filter: { name: sups.searchPhrase }"
+        ng-class="{ current: sups.isCurrent(s) }" ng-click="sups.selectSupplier(s)">
+            {{ s.name }}
+        </li>
+    </ul>
+</div>
+
+<div class="sup-tree" ng-show="!sups.searchPhrase.length">
+    <script type="text/ng-template" id="suppliers-tree-template.html">
+        <div class="sup-tree-item" ng-class="{ current: sups.isCurrent(data) }" ng-click="sups.selectSupplier(data)">
+            {{ data.name }}
+        </div>
+        <ul class="sup-ul" ng-if="data.suppliers.length > 0">
+            <li ng-repeat="data in data.suppliers" ng-include="'suppliers-tree-template.html'"></li>
+        </ul>
+    </script>
+
+    <ul class="sup-ul sup-ul-top">
+        <li ng-repeat="data in sups.supTree" ng-include="'suppliers-tree-template.html'"></li>
+    </ul>
+</div>

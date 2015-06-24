@@ -209,7 +209,7 @@ Supplier styles
     border-bottom: none;
 }
 
-.sup-info-icon, .sup-suppliers-item-icon, .sup-metric-icon {
+.sup-info-icon, .sup-suppliers-item-icon, .sup-metric-icon, .sup-shipping-icon {
     text-align: center;
     min-width: 4em;
     width: 4em;
@@ -255,34 +255,57 @@ Supplier styles
     display: none;
 }
 
-.sup-suppliers-item, .sup-metric {
+.sup-suppliers-item, .sup-metric, .sup-shipping {
     display: flex;
     align-items: center;
     width: 100%;
     margin: 1em 0;
 }
 
-.sup-suppliers-item-name, .sup-metric-name {
+.sup-suppliers-item-name, .sup-metric-name, .sup-metric-info, .sup-shipping-info {
     margin-left: 1em;
 }
 
-.sup-suppliers-item .glyphicon, .sup-metric .glyphicon {
+.sup-suppliers-item .glyphicon, .sup-metric .glyphicon, .sup-shipping .glyphicon {
     padding-top: 0.125em;
 }
 
-.sup-suppliers-item .glyphicon.glyphicon-ok-sign, .sup-metric .glyphicon {
+.sup-suppliers-item .glyphicon.glyphicon-ok-sign, .sup-metric .glyphicon, .sup-shipping .glyphicon {
     color: #57C3E7;
     font-size: 1.285714em;
+}
+
+.sup-shipping .glyphicon.glyphicon-star {
+    color: #C6C6C6;
+}
+
+.sup-shipping .glyphicon.glyphicon-star.selected {
+    color: #EFDA00;
 }
 
 .sup-metric .glyphicon.glyphicon-fire {
     color: #ED851F;
 }
 
+.sup-shipping .glyphicon.glyphicon-arrow-right {
+    color: #24c013;
+}
+
 .sup-metric-value {
     flex-grow: 1;
     text-align: right;
     margin-right: 1em;
+}
+
+.sup-shipping-star {
+    text-align: center;
+    min-width: 4em;
+    width: 4em;
+    border-left: 1px solid #C6C6C6;
+}
+
+.sup-shipping-info {
+    flex-grow: 1;
 }
 
 .sup-expand {
@@ -397,4 +420,53 @@ Suppliers tree styles
 .sup-ul-top {
     margin-top: 0.5em;
     padding-left: 0;
+}
+
+.sup-search-box {
+    width: 95%;
+    padding: 0.5em;
+    margin: 0.5em;
+    border-style: none;
+    border-bottom-style: inset;
+}
+
+.sup-search-box:focus {
+    outline: none;
+    border-style: none;
+    border-bottom-style: inset;
+    border-bottom-color: darkgray;
+}
+
+.sup-search-list {
+    padding-left: 0.5em;
+    list-style: none;
+}
+
+/* -----------------------------------
+
+Main menu styles
+
+----------------------------------- */
+
+.main-menu-list {
+    list-style: none;
+    font-size: 1.285714em;
+    line-height: 3;
+    padding-left: 0;
+}
+
+.snap-drawer-left {
+    /*background: rgb(192, 195, 195);*/
+}
+
+.main-menu-item a {
+    text-decoration: none;
+    padding-left: 1.5em;
+    color: inherit;
+}
+
+.main-menu-item.selected {
+    background: #57C3E7;
+    font-weight: bolder;
+    color: white;
 }

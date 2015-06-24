@@ -73,6 +73,23 @@
     </div>
 </div>
 
+<div class="sup-block" ng-if="sups.currentSupplier.shippings.length > 0">
+    <div class="sup-block-header">
+        <span>Shippings</span>
+    </div>
+    <div class="sup-block-content">
+        <div class="sup-shipping" ng-repeat="s in sups.currentSupplier.shippings">
+            <div class="sup-shipping-icon">
+                <i class="glyphicon" ng-class="{ 'glyphicon-arrow-left': s.incomming, 'glyphicon-arrow-right': !s.incomming }"></i>
+            </div>
+            <span class="sup-shipping-info">{{ s.other }}<br/>{{ s.quantity }} {{ s.product }}(s)</span>
+            <div class="sup-shipping-star" ng-click="sups.trackShipping(s)">
+                <i class="glyphicon glyphicon-star" ng-class="{ 'selected': s.tracked }"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--div class="sup-suppliers" ng-hide="sups.currentSupplier.suppliers.length < 1">
     <div class="sup-info-icon">
         <i class="glyphicon glyphicon-send"></i>
