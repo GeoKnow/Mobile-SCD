@@ -64,11 +64,11 @@
     </div>
     <div class="sup-block-content">
         <div class="sup-metric" ng-repeat="m in sups.currentSupplier.metrics">
-            <div class="sup-metric-icon">
-                <i class="glyphicon" ng-class="{ 'glyphicon-ok-sign': m.value >= m.threshold, 'glyphicon-fire': m.value < m.threshold }"></i>
+            <div class="sup-metric-icon" ng-click="sups.notify(m)">
+                <i class="glyphicon" ng-class="{ 'glyphicon-ok-sign': sups.evaluateMetric(m), 'glyphicon-fire': !sups.evaluateMetric(m) }"></i>
             </div>
             <span class="sup-metric-name">{{ m.name }}</span>
-            <span class="sup-metric-value">{{ m.value }}%</span>
+            <span class="sup-metric-value">{{ m.value }}{{ m.unit }}</span>
         </div>
     </div>
 </div>

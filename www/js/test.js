@@ -118,19 +118,28 @@
                         supplier.parent = sup;
                         supplier.metrics = [
                             {
-                                name: "Metric 1",
-                                value: 97.8,
-                                threshold: 95.0
+                                name: "Average Delivery Time",
+                                value: 2.55,
+                                thresholdMax: 3,
+                                unit: ' days'
                             },
                             {
-                                name: "Metric 2",
+                                name: "Average Delay",
+                                value: 0.61,
+                                thresholdMax: 1,
+                                unit: ' days'
+                            },
+                            {
+                                name: "Timeliness",
                                 value: 92.6,
-                                threshold: 93.0
+                                thresholdMin: 93.0,
+                                unit: '%'
                             },
                             {
-                                name: "Metric 3",
-                                value: 96.5,
-                                threshold:91.0
+                                name: "Parts Due",
+                                value: 446,
+                                thresholdMax: 500,
+                                unit: ' parts'
                             }
                         ];
                         console.log(supplier.name);
@@ -200,19 +209,28 @@
                     supplier.parent = ctrl.virtualSupplier;
                     supplier.metrics = [
                         {
-                            name: "Metric 1",
-                            value: 97.8,
-                            threshold: 95.0
+                            name: "Average Delivery Time",
+                            value: 2.55,
+                            thresholdMax: 3,
+                            unit: ' days'
                         },
                         {
-                            name: "Metric 2",
+                            name: "Average Delay",
+                            value: 0.61,
+                            thresholdMax: 1,
+                            unit: ' days'
+                        },
+                        {
+                            name: "Timeliness",
                             value: 92.6,
-                            threshold: 93.0
+                            thresholdMin: 93.0,
+                            unit: '%'
                         },
                         {
-                            name: "Metric 3",
-                            value: 96.5,
-                            threshold:91.0
+                            name: "Parts Due",
+                            value: 446,
+                            thresholdMax: 500,
+                            unit: ' parts'
                         }
                     ];
                     sups.push(supplier);
@@ -230,6 +248,11 @@
 
             /*return ctrl.supTree;*/
         };
+
+        ctrl.evaluateMetric = function (m) {
+            if (m.value > m.thresholdMax || m.value < m.thresholdMin) return false;
+            return true;
+        }
 
         ctrl.showSupplier = function (supplier) {
             $http.get(ctrl.qShowSupplier(supplier)).success(function(data){
@@ -280,6 +303,17 @@
         ctrl.trackShipping = function(s){
             if (s.tracked) s.tracked = false;
             else s.tracked = true;
+        }
+
+        ctrl.notify = function (metric) {
+            if (ctrl.evaluateMetric(metric)) return;
+            cordova.plugins.notification.local.schedule({
+                id: 1,
+                title: "Metric violated",
+                text: metric.name + ' is violated!',
+                //icon: "http://icons.com/?cal_id=1",
+                data: metric
+            });
         }
     }]);
 
@@ -391,6 +425,8 @@
                     var coord = [sup.latitude, sup.longitude];
                     L.marker(coord, {icon: iconSuppliers}).addTo(scope.supMapLargeLayer);
                 });
+                if (scope.supMapLargeLayer.getLayers().length > 1)
+                    scope.supMapLarge.fitBounds(scope.supMapLargeLayer.getBounds());
             });
         }
     });
