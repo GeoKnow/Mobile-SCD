@@ -153,7 +153,9 @@ body {
     /*display: none; /* should do this after map is added to the div */*/
     position: absolute;
     z-index: 5;
-    bottom: 0px;
+    /*bottom: 0px;*/
+    top: 0;
+    left: 0;
 }
 
 .sup-map-large {
@@ -469,4 +471,99 @@ Main menu styles
     background: #57C3E7;
     font-weight: bolder;
     color: white;
+}
+
+/* -----------------------------------
+
+Modal styles
+
+----------------------------------- */
+
+/*.modal {
+  text-align: center;
+}
+
+.modal:before {
+  display: inline-block;
+  vertical-align: middle;
+  content: " ";
+  height: 100%;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}*/
+
+.modal-dialog {
+    width: 22em;
+    height: 20em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -10em;
+    margin-left: -11em;
+}
+
+.modal-body {
+    display: table;
+    width: 100%;
+}
+
+.modal-body .modal-row {
+    display: table-row;
+}
+
+.modal-body span {
+    display: table-cell;
+    padding: 0.5em 0;
+    width: 100%;
+}
+
+.modal-body input {
+    width: 7em;
+    text-align: right;
+    border: none;
+    border-bottom-style: inset;
+    border-bottom-color: #C6C6C6;
+    border-bottom-width: 1px;
+}
+
+.modal-body input:focus {
+    outline: none;
+    border-style: none;
+    border-bottom-style: inset;
+    border-bottom-width: 2px;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.btn.btn-primary {
+    background: #57C3E7;
+    border-color: #00AED4;
+}
+
+.modal-header {
+    font-size: 1.285714em;
+}
+
+.modal-header .glyphicon.glyphicon-ok-sign {
+    color: #57C3E7;
+    padding-top: 0.125em;
+    margin-right: 0.5em;
+}
+
+.modal-header .glyphicon.glyphicon-fire {
+    color: #ED851F;
+    padding-top: 0.125em;
+    margin-right: 0.5em;
+}
+
+.input-div {
+    width: 100%;
+    text-align: right;
+    display: table-cell;
 }

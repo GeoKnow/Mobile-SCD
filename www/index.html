@@ -61,6 +61,35 @@ and open the template in the editor.
     <div id="supMapLarge" class="sup-map-large" sup-map-large></div>
 </div>
 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+                <i class="glyphicon" ng-class="{ 'glyphicon-ok-sign': sups.evaluateMetric(sups.currentMetric), 'glyphicon-fire': !sups.evaluateMetric(sups.currentMetric) }"></i>
+                <span class="modal-title" id="myModalLabel">{{ sups.currentMetric.name }}</span>
+            </div>
+            <div class="modal-body">
+                <div class="modal-row">
+                    <span>Metric value: </span>
+                    <span class="align-right">{{ sups.currentMetric.value }}{{ sups.currentMetric.unit }}</span>
+                </div>
+                <div class="modal-row">
+                    <span>Minimum Threshold: </span>
+                    <div class="input-div"><input type="number" ng-model="sups.currentThresholdMin" size="1"></input></div>
+                </div>
+                <div class="modal-row">
+                    <span>Maximum Threshold: </span>
+                    <div class="input-div"><input type="number" ng-model="sups.currentThresholdMax" size="1"></input></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="sups.saveCurrentMetric()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Scripts -->
 <script type="text/javascript" src="cordova.js"></script>
 <script src="js/test.js"></script>

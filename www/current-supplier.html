@@ -67,7 +67,7 @@
             <div class="sup-metric-icon" ng-click="sups.notify(m)">
                 <i class="glyphicon" ng-class="{ 'glyphicon-ok-sign': sups.evaluateMetric(m), 'glyphicon-fire': !sups.evaluateMetric(m) }"></i>
             </div>
-            <span class="sup-metric-name">{{ m.name }}</span>
+            <span class="sup-metric-name" ng-click="sups.setCurrentMetric(m)" data-toggle="modal" data-target="#myModal">{{ m.name }}</span>
             <span class="sup-metric-value">{{ m.value }}{{ m.unit }}</span>
         </div>
     </div>

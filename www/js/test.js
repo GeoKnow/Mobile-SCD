@@ -25,6 +25,7 @@
             suppliers: []
         };
         ctrl.currentSupplier = ctrl.virtualSupplier;
+        ctrl.currentMetric = {};
 
         ctrl.searchPhrase = "";
         ctrl.curSup = null;
@@ -315,6 +316,22 @@
                 data: metric
             });
         }
+
+        ctrl.setCurrentMetric = function(m) {
+            ctrl.currentMetric = m;
+            ctrl.currentThresholdMin = m.thresholdMin;
+            ctrl.currentThresholdMax = m.thresholdMax;
+        }
+
+        ctrl.saveCurrentMetric = function() {
+            if (ctrl.currentThresholdMax){
+                ctrl.currentMetric.thresholdMax = ctrl.currentThresholdMax;
+            }
+            if (ctrl.currentThresholdMin){
+                ctrl.currentMetric.thresholdMin = ctrl.currentThresholdMin;
+            }
+            ctrl.notify(ctrl.currentMetric);
+        }
     }]);
 
     /////////////////////////////////////
@@ -413,7 +430,7 @@
                 });
             });
             $(element).closest('.sup-block').find('.sup-block-header').click(function(event) {
-                $('#supMapLarge').closest('.sup-map-large-container').slideToggle();
+                $('#supMapLarge').closest('.sup-map-large-container').toggle();
                 scope.supMapLargeLayer.clearLayers();
                 var coordinates = [scope.sups.currentSupplier.latitude,
                     scope.sups.currentSupplier.longitude];
@@ -440,7 +457,7 @@
                 L.tileLayer('http://tiles.lyrk.org/ls/{z}/{x}/{y}?apikey=87be57815cf747a58ec5d84d8e64ccfa', {
                     detectRetina: true,
                     maxZoom: 19,
-                    reuseTiles: true
+                    reuseTiles: false
                 }).addTo(scope.supMapLarge);
                 scope.supMapLargeLayer = L.featureGroup();
                 scope.supMapLargeLayer.addTo(scope.supMapLarge);
@@ -448,7 +465,7 @@
                     display: 'none'
                 });
                 $(element).closest('.sup-map-large-container').find('.sup-map-large-nav').on('click', function(event) {
-                    $(element).closest('.sup-map-large-container').slideToggle();
+                    $(element).closest('.sup-map-large-container').toggle();
                 });
             });
         }
