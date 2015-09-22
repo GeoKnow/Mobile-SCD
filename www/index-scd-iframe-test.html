@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mobile SCD iframe test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+<body>
+
+<div>
+    <iframe src="http://geoknow.imp.bg.ac.rs/scd-iframe-test.html"></iframe>
+</div>
+<div>
+    <span>Messages</span>
+</div>
+<p id="msgArea">
+
+</p>
+
+<script>
+    window.addEventListener('message', function(event){
+        $('#msgArea').append(event.origin + ' said: ' + event.data + '<br>');
+    }, false);
+</script>
+
+
+
+</body>
+</html>

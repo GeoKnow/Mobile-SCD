@@ -45,5 +45,11 @@
         <div id="shippings"><strong>Shippings:</strong><br /></div>
         <div id="metrics"></div>
       </div>
+
+	<script type="text/javascript">
+		document.addEventListener("message", function(e){
+        		console.log(e.domain + " said: " + e.data);
+		}, false);
+	</script>
     </body>
 </html>

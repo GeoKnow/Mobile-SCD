@@ -36,6 +36,7 @@
         ctrl.currentSuppliers = [];
         ctrl.defaultGraph = "http://mobile-scm/dump/";
         ctrl.defaultGraphParam = "default-graph-uri";
+        //ctrl.defaultEndpoint = "http://p2.eccenca.com:11180/sparql";
         ctrl.defaultEndpoint = "http://jpo.imp.bg.ac.rs/sparql";
         ctrl.topLevelQuery = "PREFIX xmo: <http://www.xybermotive.com/ontology/> \
             PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> \
@@ -55,14 +56,20 @@
                 ?conn xmo:sender ?supplier . \
               } \
             }";
+            //default-graph-uri=http%3A%2F%2Fmobile-scm%2Fdump%2F&
         ctrl.q = "http://jpo.imp.bg.ac.rs/sparql?default-graph-uri=http%3A%2F%2Fmobile-scm%2Fdump%2F&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel%0D%0AWHERE+%7B%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Alat+%3Flat+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Along+%3Flong+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Acity+%3Fcity+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Aname+%3Fname+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+%7D%0D%0A++FILTER+NOT+EXISTS+%7B%0D%0A++++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A++%7D%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0";
         ctrl.q2 = "http://jpo.imp.bg.ac.rs/sparql?default-graph-uri=http%3A%2F%2Fmobile-scm%2Fdump%2F&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel%0D%0AWHERE+%7B%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Alat+%3Flat+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Along+%3Flong+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Acity+%3Fcity+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Aname+%3Fname+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+%7D%0D%0A++FILTER+NOT+EXISTS+%7B%0D%0A++++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A++%7D%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on";
+        //ctrl.q = "http://p2.eccenca.com:11180/sparql?callback=JSON_CALLBACK&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel%0D%0AWHERE+%7B%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Alat+%3Flat+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Along+%3Flong+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Acity+%3Fcity+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Aname+%3Fname+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+%7D%0D%0A++FILTER+NOT+EXISTS+%7B%0D%0A++++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A++%7D%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0";
+        //ctrl.q2 = 'http://p2.eccenca.com:11180/sparql?callback=JSON_CALLBACK&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel%0D%0AWHERE+%7B%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Alat+%3Flat+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Along+%3Flong+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Acity+%3Fcity+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Aname+%3Fname+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+%7D%0D%0A++FILTER+NOT+EXISTS+%7B%0D%0A++++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A++%7D%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
 
         ctrl.qShowSupplier = function(supplier) {
+            //return "http://p2.eccenca.com:11180/sparql?callback=JSON_CALLBACK&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E+%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E+%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E+%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel+%0D%0AWHERE+{+%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.+%0D%0A++OPTIONAL+{+%3Fsupplier+geo%3Alat+%3Flat+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+geo%3Along+%3Flong+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Acity+%3Fcity+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Aname+%3Fname+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+}+%0D%0A++%3Fconn+xmo%3Areceiver+%3C" +
+            //        encodeURIComponent(supplier.uri) +
+            //        "%3E+.+%0D%0A++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A}&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on";
             return "http://jpo.imp.bg.ac.rs/sparql?default-graph-uri=http%3A%2F%2Fmobile-scm%2Fdump%2F&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E+%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E+%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E+%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel+%0D%0AWHERE+{+%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.+%0D%0A++OPTIONAL+{+%3Fsupplier+geo%3Alat+%3Flat+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+geo%3Along+%3Flong+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Acity+%3Fcity+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Aname+%3Fname+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+}+%0D%0A++%3Fconn+xmo%3Areceiver+%3C" +
-                    encodeURIComponent(supplier.uri) +
-                    "%3E+.+%0D%0A++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A}&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on";
-        }
+                encodeURIComponent(supplier.uri) +
+                "%3E+.+%0D%0A++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A}&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on";
+        };
 
         ctrl.getSuppliers = function(){
             var req = {
@@ -73,6 +80,7 @@
                     callback: JSON_CALLBACK\
                 }"
             };
+            // use JSONP with BROX's endpoint
             $http.get(ctrl.q2).success(function(data){
                 var results = data.results.bindings;
                 ctrl.curSup = null;
@@ -103,6 +111,7 @@
         };
 
         ctrl.doWork = function(sup) {
+            // use jsonp with BROX's endpoint
             $http.get(ctrl.qShowSupplier(sup)).success(function(data){
                     var results = data.results.bindings;
                     var supList = [];
@@ -133,7 +142,7 @@
                             {
                                 name: "Timeliness",
                                 value: 92.6,
-                                thresholdMin: 93.0,
+                                thresholdMin: 92.0,
                                 unit: '%'
                             },
                             {
@@ -144,6 +153,7 @@
                             }
                         ];
                         console.log(supplier.name);
+                        //if (supplier.name === "Continental AG") {
                         if (supplier.name === "Fairphone_OS Supplier") {
                             console.log('shippings are being added');
                             supplier.shippings = [
@@ -193,48 +203,54 @@
                 suppliers: []
             };
             ctrl.currentSupplier = ctrl.virtualSupplier;
+            // use jsonp with BROX's endpoint
             $http.get(ctrl.q2).success(function(data){
                 var results = data.results.bindings;
 //                alert("Success: " + JSON.stringify(results));
                 var sups = [];
                 for (var s in results) {
-                    var supplier = {};
-                    supplier.latitude = results[s].lat.value;
-                    supplier.longitude = results[s].long.value;
-                    supplier.city = results[s].city.value;
-                    supplier.name = results[s].name.value;
-                    supplier.street = results[s].street.value;
-                    supplier.zipcode = results[s].zip.value;
-                    supplier.uri = results[s].supplier.value;
-                    supplier.suppliers = [];
-                    supplier.parent = ctrl.virtualSupplier;
-                    supplier.metrics = [
-                        {
-                            name: "Average Delivery Time",
-                            value: 2.55,
-                            thresholdMax: 3,
-                            unit: ' days'
-                        },
-                        {
-                            name: "Average Delay",
-                            value: 0.61,
-                            thresholdMax: 1,
-                            unit: ' days'
-                        },
-                        {
-                            name: "Timeliness",
-                            value: 92.6,
-                            thresholdMin: 93.0,
-                            unit: '%'
-                        },
-                        {
-                            name: "Parts Due",
-                            value: 446,
-                            thresholdMax: 500,
-                            unit: ' parts'
-                        }
-                    ];
-                    sups.push(supplier);
+                    if (results[s].lat && results[s].long
+                            && results[s].city && results[s].name
+                            && results[s].street && results[s].zip
+                            && results[s].supplier) {
+                        var supplier = {};
+                        supplier.latitude = results[s].lat.value;
+                        supplier.longitude = results[s].long.value;
+                        supplier.city = results[s].city.value;
+                        supplier.name = results[s].name.value;
+                        supplier.street = results[s].street.value;
+                        supplier.zipcode = results[s].zip.value;
+                        supplier.uri = results[s].supplier.value;
+                        supplier.suppliers = [];
+                        supplier.parent = ctrl.virtualSupplier;
+                        supplier.metrics = [
+                            {
+                                name: "Average Delivery Time",
+                                value: 2.55,
+                                thresholdMax: 3,
+                                unit: ' days'
+                            },
+                            {
+                                name: "Average Delay",
+                                value: 0.61,
+                                thresholdMax: 1,
+                                unit: ' days'
+                            },
+                            {
+                                name: "Timeliness",
+                                value: 92.6,
+                                thresholdMin: 93.0,
+                                unit: '%'
+                            },
+                            {
+                                name: "Parts Due",
+                                value: 446,
+                                thresholdMax: 500,
+                                unit: ' parts'
+                            }
+                        ];
+                        sups.push(supplier);
+                    }
                 }
                 $timeout(function (){
                     ctrl.supTree = sups;
@@ -253,9 +269,21 @@
         ctrl.evaluateMetric = function (m) {
             if (m.value > m.thresholdMax || m.value < m.thresholdMin) return false;
             return true;
-        }
+        };
+
+        ctrl.evaluateSupplier = function (sup) {
+            var res = true;
+            $(sup.metrics).each(function(k,v){
+                if (!ctrl.evaluateMetric(v)) {
+                    res = false;
+                    return false;
+                }
+            });
+            return res;
+        };
 
         ctrl.showSupplier = function (supplier) {
+            // use JSONP with BROX's endpoint
             $http.get(ctrl.qShowSupplier(supplier)).success(function(data){
                 var results = data.results.bindings;
                 ctrl.currentSuppliers = [];
@@ -281,10 +309,10 @@
             });
         };
 
-        ctrl.selectSupplier = function(sup) {
+        ctrl.selectSupplier = function(sup, closeSnap) {
             // $('.sup-suppliers-items').css({ "display": "none" });
             ctrl.currentSupplier = sup;
-            $scope.snapper.close();
+            if (closeSnap) $scope.snapper.close();
         };
 
         ctrl.levelUp = function() {
@@ -299,12 +327,12 @@
 
         ctrl.toggleTreeView = function(){
             $scope.snapper.open('right');
-        }
+        };
 
         ctrl.trackShipping = function(s){
             if (s.tracked) s.tracked = false;
             else s.tracked = true;
-        }
+        };
 
         ctrl.notify = function (metric) {
             if (ctrl.evaluateMetric(metric)) return;
@@ -315,13 +343,13 @@
                 //icon: "http://icons.com/?cal_id=1",
                 data: metric
             });
-        }
+        };
 
         ctrl.setCurrentMetric = function(m) {
             ctrl.currentMetric = m;
             ctrl.currentThresholdMin = m.thresholdMin;
             ctrl.currentThresholdMax = m.thresholdMax;
-        }
+        };
 
         ctrl.saveCurrentMetric = function() {
             if (ctrl.currentThresholdMax){
@@ -465,6 +493,7 @@
                     display: 'none'
                 });
                 $(element).closest('.sup-map-large-container').find('.sup-map-large-nav').on('click', function(event) {
+                    scope.supMapLarge.invalidateSize();
                     $(element).closest('.sup-map-large-container').toggle();
                 });
             });

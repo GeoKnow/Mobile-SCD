@@ -5,7 +5,7 @@
 <div class="sup-search-results" ng-show="sups.searchPhrase.length">
     <ul class="sup-search-list">
         <li class="sup-tree-item" ng-repeat="s in sups.suppliersArray | filter: { name: sups.searchPhrase }"
-        ng-class="{ current: sups.isCurrent(s) }" ng-click="sups.selectSupplier(s)">
+        ng-class="{ current: sups.isCurrent(s) }" ng-click="sups.selectSupplier(s, true)">
             {{ s.name }}
         </li>
     </ul>
@@ -13,7 +13,7 @@
 
 <div class="sup-tree" ng-show="!sups.searchPhrase.length">
     <script type="text/ng-template" id="suppliers-tree-template.html">
-        <div class="sup-tree-item" ng-class="{ current: sups.isCurrent(data) }" ng-click="sups.selectSupplier(data)">
+        <div class="sup-tree-item" ng-class="{ current: sups.isCurrent(data) }" ng-click="sups.selectSupplier(data, true)">
             {{ data.name }}
         </div>
         <ul class="sup-ul" ng-if="data.suppliers.length > 0">

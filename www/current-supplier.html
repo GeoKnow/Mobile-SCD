@@ -51,7 +51,7 @@
     <div class="sup-block-content">
         <div class="sup-suppliers-item" ng-repeat="sup in sups.currentSupplier.suppliers" ng-click="sups.selectSupplier(sup)">
             <div class="sup-suppliers-item-icon">
-                <i class="glyphicon glyphicon-ok-sign"></i>
+                <i ng-class="{ 'glyphicon-ok-sign': sups.evaluateSupplier(sup), 'glyphicon-fire': !sups.evaluateSupplier(sup) }" class="glyphicon"></i>
             </div>
             <span class="sup-suppliers-item-name">{{ sup.name }}</span>
         </div>

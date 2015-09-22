@@ -65,7 +65,6 @@ and open the template in the editor.
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
                 <i class="glyphicon" ng-class="{ 'glyphicon-ok-sign': sups.evaluateMetric(sups.currentMetric), 'glyphicon-fire': !sups.evaluateMetric(sups.currentMetric) }"></i>
                 <span class="modal-title" id="myModalLabel">{{ sups.currentMetric.name }}</span>
             </div>
@@ -76,11 +75,11 @@ and open the template in the editor.
                 </div>
                 <div class="modal-row">
                     <span>Minimum Threshold: </span>
-                    <div class="input-div"><input type="number" ng-model="sups.currentThresholdMin" size="1"></input></div>
+                    <div class="input-div"><input type="number" ng-model="sups.currentThresholdMin" size="1"/></div>
                 </div>
                 <div class="modal-row">
                     <span>Maximum Threshold: </span>
-                    <div class="input-div"><input type="number" ng-model="sups.currentThresholdMax" size="1"></input></div>
+                    <div class="input-div"><input type="number" ng-model="sups.currentThresholdMax" size="1"/></div>
                 </div>
             </div>
             <div class="modal-footer">

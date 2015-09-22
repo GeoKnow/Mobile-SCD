@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SCD iframe test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        var sendMsg = function(){
+            var msgInput = $('#msg');
+            var m = msgInput.val();
+            parent.window.postMessage(m,'*');
+            msgInput.val('');
+        }
+    </script>
+    <input id="msg" type="text">
+    <button id="btnSend" onclick="sendMsg()">Send Message</button>
+    <script>
+        $('#msg').keyup(function(e){
+            if (e.keyCode === 13) sendMsg();
+        });
+    </script>
+</body>
+</html>
