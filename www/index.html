@@ -41,7 +41,7 @@ and open the template in the editor.
     </div>
 </div>
 <div id="snapContent" class="snap-content container nav-below" tree-drawer>
-    <section class="sup-list">
+    <section ng-if="sups.currentView === sups.idSuppliersView" class="sup-list">
         <div class="row">
             <div class="sup-tree col-sm-6 hidden-xs">
                 <suppliers-tree></suppliers-tree>
@@ -52,6 +52,7 @@ and open the template in the editor.
             </div>
         </div>
     </section>
+    <messages ng-if="sups.currentView === sups.idMessagesView"></messages>
 </div>
 
 <div class="sup-map-large-container">
@@ -91,9 +92,18 @@ and open the template in the editor.
 </div>
 <!-- Scripts -->
 <script type="text/javascript" src="cordova.js"></script>
+<script src="js/services/parameters.js"></script>
+<script src="js/services/notifications.js"></script>
 <script src="js/test.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/snap.js"></script>
+
+<script>
+    window.addEventListener('message', function(e){
+        console.log("Got message in root listener:");
+        console.log(e);
+    }, false);
+</script>
 
 </body>
 </html>

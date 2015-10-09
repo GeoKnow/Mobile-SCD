@@ -10,31 +10,35 @@
     <body>
 
       <script type="text/javascript">
+          // first time host was http://192.168.1.107:9000
+          var dashboardHost = 'http://192.168.43.246:9000';
         var addOrder = function(supplierId, connectionId, dueParts) {
           $('#orders').append("<p><a href=\"#\" onclick=\"loadMetrics('"+supplierId+"')\">"+supplierId+"</a> "+connectionId+" "+dueParts+"</p>");
-        }
+        };
 
         var addShipping = function(supplierId, connectionId, dueParts) {
           $('#shippings').append("<p><a href=\"#\" onclick=\"loadMetrics('"+supplierId+"')\">"+supplierId+"</a> "+connectionId+" "+dueParts+"</p>");
-        }
+        };
 
         var loadMetrics = function(supplierId) {
-          $.get("http://192.168.1.107:9000/metrics?supplierId=" + supplierId, function(data) {
-            console.log(data);
-          })
-        }
+            $.get(dashboardHost + "/metrics?supplierId=" + supplierId, function(data) {
+                console.log(data);
+            })
+        };
 
         var refreshMetrics = function() {
           console.log("refreshMetrics");
-        }
+        };
 
           // Single step through the simulation
           var step = function() {
-            $.post('http://192.168.1.107:9000/simulator/step');
-          }
+              console.log('Calling step function ...');
+              window.postMessage('Called step','*');
+              $.post(dashboardHost + '/simulator/step');
+          };
           // Single step through the simulation
           var loadStream = function() {
-            $('#content').append('<iframe src="http://192.168.1.107:9000/deliveryStream" frameborder="0" style="display:none"></iframe>');
+              $('#content').append('<iframe src="' + dashboardHost + '/deliveryStream" frameborder="0" style="display:none"></iframe>');
           }
       </script>
       <!--iframe src="http://192.168.1.107:9000/deliveryStream" frameborder="0" style="display:none"></iframe-->
@@ -47,7 +51,7 @@
       </div>
 
 	<script type="text/javascript">
-		document.addEventListener("message", function(e){
+		window.addEventListener("message", function(e){
         		console.log(e.domain + " said: " + e.data);
 		}, false);
 	</script>

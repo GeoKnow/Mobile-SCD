@@ -1,5 +1,5 @@
 (function(){
-    var app = angular.module("mobile-scm", []);
+    var app = angular.module("mobile-scm", ['scm-parameters-hotspot', 'scm-notifications-phone']);
 
     /////////////////////////////////////
     // Controllers
@@ -15,8 +15,14 @@
     // App_Code: vUsfPezonTcM0FKG58vYRw
     /////////////////////////////////////
 
-    app.controller("SuppliersController", ['$scope', '$http', '$timeout', function($scope, $http, $timeout){
+    app.controller("SuppliersController", ['scmParameters', 'scmNotifier', '$scope', '$http', '$timeout', '$document', '$window', '$log', function(params, notifier, $scope, $http, $timeout, $document, $window, $log){
         var ctrl = this;
+
+        ctrl.idSuppliersView = 0;
+        ctrl.idShippingsView = 1;
+        ctrl.idOrdersView = 2;
+        ctrl.idMessagesView = 3;
+        ctrl.currentView = ctrl.idSuppliersView;
 
         ctrl.supTree = [];
         ctrl.virtualSupplier = {
@@ -34,10 +40,11 @@
         ctrl.topSuppliers = [];
         ctrl.suppliersArray = [];
         ctrl.currentSuppliers = [];
-        ctrl.defaultGraph = "http://mobile-scm/dump/";
+
+        ctrl.defaultGraph = params.graph;
         ctrl.defaultGraphParam = "default-graph-uri";
         //ctrl.defaultEndpoint = "http://p2.eccenca.com:11180/sparql";
-        ctrl.defaultEndpoint = "http://jpo.imp.bg.ac.rs/sparql";
+        ctrl.defaultEndpoint = params.endpoint;
         ctrl.topLevelQuery = "PREFIX xmo: <http://www.xybermotive.com/ontology/> \
             PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> \
             PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#l> \
@@ -57,8 +64,8 @@
               } \
             }";
             //default-graph-uri=http%3A%2F%2Fmobile-scm%2Fdump%2F&
-        ctrl.q = "http://jpo.imp.bg.ac.rs/sparql?default-graph-uri=http%3A%2F%2Fmobile-scm%2Fdump%2F&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel%0D%0AWHERE+%7B%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Alat+%3Flat+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Along+%3Flong+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Acity+%3Fcity+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Aname+%3Fname+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+%7D%0D%0A++FILTER+NOT+EXISTS+%7B%0D%0A++++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A++%7D%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0";
-        ctrl.q2 = "http://jpo.imp.bg.ac.rs/sparql?default-graph-uri=http%3A%2F%2Fmobile-scm%2Fdump%2F&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel%0D%0AWHERE+%7B%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Alat+%3Flat+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Along+%3Flong+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Acity+%3Fcity+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Aname+%3Fname+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+%7D%0D%0A++FILTER+NOT+EXISTS+%7B%0D%0A++++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A++%7D%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on";
+        ctrl.q = ctrl.defaultEndpoint + "?default-graph-uri=" + encodeURIComponent(ctrl.defaultGraph) + "&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel%0D%0AWHERE+%7B%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Alat+%3Flat+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Along+%3Flong+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Acity+%3Fcity+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Aname+%3Fname+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+%7D%0D%0A++FILTER+NOT+EXISTS+%7B%0D%0A++++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A++%7D%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0";
+        ctrl.q2 = ctrl.defaultEndpoint + "?default-graph-uri=" + encodeURIComponent(ctrl.defaultGraph) + "&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel%0D%0AWHERE+%7B%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Alat+%3Flat+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Along+%3Flong+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Acity+%3Fcity+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Aname+%3Fname+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+%7D%0D%0A++FILTER+NOT+EXISTS+%7B%0D%0A++++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A++%7D%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on";
         //ctrl.q = "http://p2.eccenca.com:11180/sparql?callback=JSON_CALLBACK&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel%0D%0AWHERE+%7B%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Alat+%3Flat+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Along+%3Flong+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Acity+%3Fcity+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Aname+%3Fname+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+%7D%0D%0A++FILTER+NOT+EXISTS+%7B%0D%0A++++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A++%7D%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0";
         //ctrl.q2 = 'http://p2.eccenca.com:11180/sparql?callback=JSON_CALLBACK&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel%0D%0AWHERE+%7B%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Alat+%3Flat+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Along+%3Flong+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Acity+%3Fcity+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Aname+%3Fname+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+%7D%0D%0A++FILTER+NOT+EXISTS+%7B%0D%0A++++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A++%7D%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
 
@@ -66,7 +73,7 @@
             //return "http://p2.eccenca.com:11180/sparql?callback=JSON_CALLBACK&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E+%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E+%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E+%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel+%0D%0AWHERE+{+%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.+%0D%0A++OPTIONAL+{+%3Fsupplier+geo%3Alat+%3Flat+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+geo%3Along+%3Flong+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Acity+%3Fcity+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Aname+%3Fname+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+}+%0D%0A++%3Fconn+xmo%3Areceiver+%3C" +
             //        encodeURIComponent(supplier.uri) +
             //        "%3E+.+%0D%0A++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A}&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on";
-            return "http://jpo.imp.bg.ac.rs/sparql?default-graph-uri=http%3A%2F%2Fmobile-scm%2Fdump%2F&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E+%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E+%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E+%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel+%0D%0AWHERE+{+%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.+%0D%0A++OPTIONAL+{+%3Fsupplier+geo%3Alat+%3Flat+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+geo%3Along+%3Flong+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Acity+%3Fcity+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Aname+%3Fname+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+}+%0D%0A++%3Fconn+xmo%3Areceiver+%3C" +
+            return ctrl.defaultEndpoint + "?default-graph-uri=" + encodeURIComponent(ctrl.defaultGraph) + "&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E+%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E+%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E+%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel+%0D%0AWHERE+{+%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.+%0D%0A++OPTIONAL+{+%3Fsupplier+geo%3Alat+%3Flat+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+geo%3Along+%3Flong+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Acity+%3Fcity+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Aname+%3Fname+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+}+%0D%0A++%3Fconn+xmo%3Areceiver+%3C" +
                 encodeURIComponent(supplier.uri) +
                 "%3E+.+%0D%0A++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A}&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on";
         };
@@ -97,6 +104,7 @@
                     supplier.street = results[s].street.value;
                     supplier.zipcode = results[s].zip.value;
                     supplier.uri = results[s].supplier.value;
+                    supplier.codename = supplier.uri.substring(supplier.uri.lastIndexOf('/')+1, supplier.uri.length);
                     supplier.suppliers = [];
                     ctrl.topSuppliers.push(supplier);
                 }
@@ -124,6 +132,7 @@
                         supplier.street = results[s].street.value;
                         supplier.zipcode = results[s].zip.value;
                         supplier.uri = results[s].supplier.value;
+                        supplier.codename = supplier.uri.substring(supplier.uri.lastIndexOf('/')+1, supplier.uri.length);
                         supplier.suppliers = [];
                         supplier.parent = sup;
                         supplier.metrics = [
@@ -221,6 +230,7 @@
                         supplier.street = results[s].street.value;
                         supplier.zipcode = results[s].zip.value;
                         supplier.uri = results[s].supplier.value;
+                        supplier.codename = supplier.uri.substring(supplier.uri.lastIndexOf('/')+1, supplier.uri.length);
                         supplier.suppliers = [];
                         supplier.parent = ctrl.virtualSupplier;
                         supplier.metrics = [
@@ -296,6 +306,7 @@
                     supplier.street = results[s].street.value;
                     supplier.zipcode = results[s].zip.value;
                     supplier.uri = results[s].supplier.value;
+                    supplier.codename = supplier.uri.substring(supplier.uri.lastIndexOf('/')+1, supplier.uri.length);
                     supplier.suppliers = [];
                     ctrl.currentSuppliers.push(supplier);
                 }
@@ -336,13 +347,8 @@
 
         ctrl.notify = function (metric) {
             if (ctrl.evaluateMetric(metric)) return;
-            cordova.plugins.notification.local.schedule({
-                id: 1,
-                title: "Metric violated",
-                text: metric.name + ' is violated!',
-                //icon: "http://icons.com/?cal_id=1",
-                data: metric
-            });
+            var message = 'Metric ' + metric.name + ' is violated';
+            notifier.notifyMetric(message, 'Metric violated', ctrl.currentSupplier);
         };
 
         ctrl.setCurrentMetric = function(m) {
@@ -359,7 +365,124 @@
                 ctrl.currentMetric.thresholdMin = ctrl.currentThresholdMin;
             }
             ctrl.notify(ctrl.currentMetric);
-        }
+        };
+
+        ctrl.showMessages = function() {
+            ctrl.currentView = ctrl.idMessagesView;
+        };
+
+        ctrl.findSupplierByCodename = function(tree, codename) {
+            var res = null;
+            $.each(tree, function(key, elem) {
+                if (elem.codename === codename) {
+                    res = elem;
+                    return false;
+                }
+            });
+            if (res !== null) return res;
+            else {
+                $.each(tree, function(key, sup) {
+                    res = ctrl.findSupplierByCodename(sup.suppliers, codename);
+                    if (res !== null) return false;
+                });
+                return res;
+            }
+        };
+
+        ctrl.msgs = ['Initial Message 1', 'Initial Message 2'];
+        ctrl.cnt = 0;
+
+        ctrl.injectMessage = function(msg) {
+            // inject message here
+            $log.info('Received message');
+            $log.info(msg.data);
+
+            for (var prop in msg.data.dueParts) {
+                var supplier = ctrl.findSupplierByCodename(ctrl.supTree, prop);
+                if (supplier !== null) {
+                    var value = msg.data.dueParts[prop];
+                    $log.info('Due parts for ' + supplier.name + ': ' + value);
+                    for (var i=0; i<supplier.metrics.length; i++) {
+                        var metric = supplier.metrics[i];
+                        if (metric.name === 'Parts Due') {
+                            metric.value = value;
+                            if (metric.value > metric.thresholdMax || metric.value < metric.thresholdMin) {
+                                var title = supplier.name + ' has an issue!';
+                                var message = 'Metric ' + metric.name + ' is out of bounds';
+                                notifier.notifyMetric(message, title, supplier);
+                            }
+                        }
+                    }
+                } else {
+                    $log.info('Couldn\'t find supplier with codename ' + prop);
+                }
+            }
+
+            if (ctrl.msgs.length === 10) ctrl.msgs.shift();
+            ctrl.msgs.push(msg.data.currentDate);
+            ctrl.cnt++;
+            if (ctrl.cnt === 10) {
+                ctrl.cnt = 0;
+                notifier.notifyGlobal("Ten new messages arrived", "New data arrived");
+            }
+        };
+
+        ctrl.switchToView = function(view) {
+            if (ctrl.currentView !== view) {
+                ctrl.currentView = view;
+            }
+            $scope.snapper.close();
+        };
+
+        ctrl.dashboardHost = params.dashboard;
+
+        $document.on('deviceready', function() {
+            if (typeof cordova !== 'undefined') {
+                $log.info('Enabling background mode ...');
+                if (typeof cordova.plugins.backgroundMode === 'undefined') {
+                    $log.info('Didn\'t find backgroundMode plugin');
+                } else {
+                    //cordova.plugins.backgroundMode.enable();
+                    //cordova.plugins.backgroundMode.configure({
+                    //    silent: true
+                    //});
+                }
+                if (typeof cordova.plugins.notification !== 'undefined'){
+                    $log.info('Adding notification listener');
+                    cordova.plugins.notification.local.on('click', function (notification) {
+                        $log.debug('User tapped a notification');
+                        $log.debug(notification);
+                        var parsedData = JSON.parse(notification.data);
+                        try {
+                            var newSupplier = ctrl.findSupplierByCodename(ctrl.supTree, parsedData.supplierCodename);
+                            if (newSupplier !== null) $scope.$apply(function() { ctrl.currentSupplier = newSupplier; });
+                        } catch (error) {
+                            $log.error(error);
+                            $log.error('Couldn\'t set new supplier, expected data object with currentSupplier property, got:');
+                            $log.error(parsedData);
+                        }
+                    });
+                    //$log.info('Adding notification trigger listener');
+                    //cordova.plugins.notification.local.on('trigger', function (notification) {
+                    //    $log.debug('Received trigger event: ');
+                    //    $log.debug(notification);
+                    //});
+                }
+                $log.info('Background mode enabled');
+            }
+            $('body').prepend('<iframe src="' + ctrl.dashboardHost + '/deliveryStream" frameborder="0" style="display:none"></iframe>');
+        });
+
+        $window.addEventListener('message', function(e) {
+            $timeout(function() { ctrl.injectMessage(e); }, 0);
+        }, false);
+
+        $document.ready(function(){
+            // if it's running in the browser load delivery stream iframe here
+            if (typeof cordova === 'undefined') {
+                $('body').prepend('<iframe src="' + ctrl.dashboardHost + '/deliveryStream" frameborder="0" style="display:none"></iframe>');
+            }
+        });
     }]);
 
     /////////////////////////////////////
@@ -397,6 +520,13 @@
         return {
             restrict: "E",
             templateUrl: "main-menu.html"
+        }
+    });
+
+    app.directive("messages", function() {
+        return {
+            restrict: "E",
+            templateUrl: "messages.html"
         }
     });
 
@@ -513,15 +643,15 @@ $(document).ready(function (){
 });
 
 function btnClicked() {
-        //alert("Button clicked!");
-        cordova.plugins.notification.local.schedule({
-          id: 1,
-          title: "Production Jour fixe",
-          text: "Duration 1h",
-          //icon: "http://icons.com/?cal_id=1",
-          data: { meetingId:"123#fg8" }
-        });
-    };
-    function tst(){
-        alert("Test called");
-    };
+    //alert("Button clicked!");
+    cordova.plugins.notification.local.schedule({
+      id: 1,
+      title: "Production Jour fixe",
+      text: "Duration 1h",
+      //icon: "http://icons.com/?cal_id=1",
+      data: { meetingId:"123#fg8" }
+    });
+}
+function tst(){
+    alert("Test called");
+}
