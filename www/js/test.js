@@ -1,5 +1,5 @@
 (function(){
-    var app = angular.module("mobile-scm", ['scm-parameters-hotspot', 'scm-notifications-phone']);
+    var app = angular.module("mobile-scm");
 
     /////////////////////////////////////
     // Controllers
@@ -15,7 +15,7 @@
     // App_Code: vUsfPezonTcM0FKG58vYRw
     /////////////////////////////////////
 
-    app.controller("SuppliersController", ['scmParameters', 'scmNotifier', '$scope', '$http', '$timeout', '$document', '$window', '$log', function(params, notifier, $scope, $http, $timeout, $document, $window, $log){
+    app.controller("SuppliersController", ['scmParameters', 'scmNotifier', 'supplierService', '$scope', '$http', '$timeout', '$document', '$window', '$log', function(params, notifier, supplierService, $scope, $http, $timeout, $document, $window, $log){
         var ctrl = this;
 
         ctrl.idSuppliersView = 0;
@@ -78,124 +78,31 @@
                 "%3E+.+%0D%0A++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A}&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on";
         };
 
-        ctrl.getSuppliers = function(){
-            var req = {
-                responseType: "json",
-                params: "{ \
-                    query: " + encodeURIComponent(ctrl.topLevelQuery) + ",\
-                    default-graph-uri: " + encodeURIComponent(ctrl.defaultGraph) + ",\
-                    callback: JSON_CALLBACK\
-                }"
-            };
-            // use JSONP with BROX's endpoint
-            $http.get(ctrl.q2).success(function(data){
-                var results = data.results.bindings;
-                ctrl.curSup = null;
-                ctrl.curLevel = -1;
-                ctrl.suppliers = [];
-                ctrl.topSuppliers = [];
-                ctrl.currentSuppliers = [];
-                for (var s in results) {
-                    var supplier = {};
-                    supplier.latitude = results[s].lat.value;
-                    supplier.longitude = results[s].long.value;
-                    supplier.city = results[s].city.value;
-                    supplier.name = results[s].name.value;
-                    supplier.street = results[s].street.value;
-                    supplier.zipcode = results[s].zip.value;
-                    supplier.uri = results[s].supplier.value;
-                    supplier.codename = supplier.uri.substring(supplier.uri.lastIndexOf('/')+1, supplier.uri.length);
-                    supplier.suppliers = [];
-                    ctrl.topSuppliers.push(supplier);
-                }
-                ctrl.curLevel = 0;
-                ctrl.suppliers.push(ctrl.topSuppliers);
-                ctrl.currentSuppliers = ctrl.topSuppliers;
-                return ctrl.topSuppliers;
-            }).error(function(data){
-                alert("Error: " + data);
-                return null;
-            });
-        };
-
         ctrl.doWork = function(sup) {
             // use jsonp with BROX's endpoint
             $http.get(ctrl.qShowSupplier(sup)).success(function(data){
-                    var results = data.results.bindings;
-                    var supList = [];
-                    for (var s in results) {
-                        var supplier = {};
-                        supplier.latitude = results[s].lat.value;
-                        supplier.longitude = results[s].long.value;
-                        supplier.city = results[s].city.value;
-                        supplier.name = results[s].name.value;
-                        supplier.street = results[s].street.value;
-                        supplier.zipcode = results[s].zip.value;
-                        supplier.uri = results[s].supplier.value;
-                        supplier.codename = supplier.uri.substring(supplier.uri.lastIndexOf('/')+1, supplier.uri.length);
-                        supplier.suppliers = [];
-                        supplier.parent = sup;
-                        supplier.metrics = [
-                            {
-                                name: "Average Delivery Time",
-                                value: 2.55,
-                                thresholdMax: 3,
-                                unit: ' days'
-                            },
-                            {
-                                name: "Average Delay",
-                                value: 0.61,
-                                thresholdMax: 1,
-                                unit: ' days'
-                            },
-                            {
-                                name: "Timeliness",
-                                value: 92.6,
-                                thresholdMin: 92.0,
-                                unit: '%'
-                            },
-                            {
-                                name: "Parts Due",
-                                value: 446,
-                                thresholdMax: 500,
-                                unit: ' parts'
-                            }
-                        ];
-                        console.log(supplier.name);
-                        //if (supplier.name === "Continental AG") {
-                        if (supplier.name === "Fairphone_OS Supplier") {
-                            console.log('shippings are being added');
-                            supplier.shippings = [
-                                {
-                                    incomming: true,
-                                    other: "Supplier X",
-                                    quantity: 3,
-                                    product: "ProductX"
-                                },
-                                {
-                                    incomming: false,
-                                    other: "Supplier Y",
-                                    quantity: 4,
-                                    product: "ProductY"
-                                }
-                            ];
-                        }
-                        supList.push(supplier);
-                        /*sup.suppliers.push(supplier);*/
-                    }
-                    $timeout(function(){
-//                        alert("Adding to " + sup.name + " " + supList.length + " suppliers");
-                        sup.suppliers = supList;
-                        ctrl.suppliersArray.push(sup);
-                        if (sup.suppliers !== null && sup.suppliers.length > 0)
-                            ctrl.populateTree(sup.suppliers);
-                    }, 0);
-                    /*if (sup.suppliers !== null && sup.suppliers.length > 0)
-                        ctrl.populateTree(sup.suppliers);*/
-                }).error(function(data){
-                    alert("Error: " + data);
-                    sup.suppliers = null;
-                });
+                var results = data.results.bindings;
+                var supList = [];
+                for (var s in results) {
+                    var r = results[s];
+                    var supplier = supplierService.createSupplier(
+                        r.supplier.value, r.name.value, r.lat.value, r.long.value,
+                        r.city.value, r.street.value, r.zip.value
+                    );
+                    supplier.parent = sup;
+                    $log.info('Found supplier: ' + supplier.name);
+                    supList.push(supplier);
+                }
+                $timeout(function(){
+                    sup.suppliers = supList;
+                    ctrl.suppliersArray.push(sup);
+                    if (sup.suppliers !== null && sup.suppliers.length > 0)
+                        ctrl.populateTree(sup.suppliers);
+                }, 0);
+            }).error(function(data){
+                alert("Error: " + data);
+                sup.suppliers = null;
+            });
         };
 
         ctrl.populateTree = function (sups) {
@@ -206,11 +113,7 @@
 
         ctrl.getSuppliersTree = function() {
             ctrl.supTree = [];
-            ctrl.virtualSupplier = {
-                parent: null,
-                name: "Supply Chain Network",
-                suppliers: []
-            };
+            ctrl.virtualSupplier = supplierService.createVirtualSupplier();
             ctrl.currentSupplier = ctrl.virtualSupplier;
             // use jsonp with BROX's endpoint
             $http.get(ctrl.q2).success(function(data){
@@ -218,47 +121,16 @@
 //                alert("Success: " + JSON.stringify(results));
                 var sups = [];
                 for (var s in results) {
-                    if (results[s].lat && results[s].long
-                            && results[s].city && results[s].name
-                            && results[s].street && results[s].zip
-                            && results[s].supplier) {
-                        var supplier = {};
-                        supplier.latitude = results[s].lat.value;
-                        supplier.longitude = results[s].long.value;
-                        supplier.city = results[s].city.value;
-                        supplier.name = results[s].name.value;
-                        supplier.street = results[s].street.value;
-                        supplier.zipcode = results[s].zip.value;
-                        supplier.uri = results[s].supplier.value;
-                        supplier.codename = supplier.uri.substring(supplier.uri.lastIndexOf('/')+1, supplier.uri.length);
-                        supplier.suppliers = [];
+                    var r = results[s];
+                    if (r.lat && r.long
+                            && r.city && r.name
+                            && r.street && r.zip
+                            && r.supplier) {
+                        var supplier = supplierService.createSupplier(
+                            r.supplier.value, r.name.value, r.lat.value, r.long.value,
+                            r.city.value, r.street.value, r.zip.value
+                        );
                         supplier.parent = ctrl.virtualSupplier;
-                        supplier.metrics = [
-                            {
-                                name: "Average Delivery Time",
-                                value: 2.55,
-                                thresholdMax: 3,
-                                unit: ' days'
-                            },
-                            {
-                                name: "Average Delay",
-                                value: 0.61,
-                                thresholdMax: 1,
-                                unit: ' days'
-                            },
-                            {
-                                name: "Timeliness",
-                                value: 92.6,
-                                thresholdMin: 93.0,
-                                unit: '%'
-                            },
-                            {
-                                name: "Parts Due",
-                                value: 446,
-                                thresholdMax: 500,
-                                unit: ' parts'
-                            }
-                        ];
                         sups.push(supplier);
                     }
                 }
@@ -268,52 +140,6 @@
 //                    ctrl.populateTree(ctrl.supTree);
                     ctrl.populateTree(ctrl.virtualSupplier.suppliers);
                 }, 0);
-            }).error(function(data){
-                alert("Error: " + data);
-                return null;
-            });
-
-            /*return ctrl.supTree;*/
-        };
-
-        ctrl.evaluateMetric = function (m) {
-            if (m.value > m.thresholdMax || m.value < m.thresholdMin) return false;
-            return true;
-        };
-
-        ctrl.evaluateSupplier = function (sup) {
-            var res = true;
-            $(sup.metrics).each(function(k,v){
-                if (!ctrl.evaluateMetric(v)) {
-                    res = false;
-                    return false;
-                }
-            });
-            return res;
-        };
-
-        ctrl.showSupplier = function (supplier) {
-            // use JSONP with BROX's endpoint
-            $http.get(ctrl.qShowSupplier(supplier)).success(function(data){
-                var results = data.results.bindings;
-                ctrl.currentSuppliers = [];
-                for (var s in results) {
-                    var supplier = {};
-                    supplier.latitude = results[s].lat.value;
-                    supplier.longitude = results[s].long.value;
-                    supplier.city = results[s].city.value;
-                    supplier.name = results[s].name.value;
-                    supplier.street = results[s].street.value;
-                    supplier.zipcode = results[s].zip.value;
-                    supplier.uri = results[s].supplier.value;
-                    supplier.codename = supplier.uri.substring(supplier.uri.lastIndexOf('/')+1, supplier.uri.length);
-                    supplier.suppliers = [];
-                    ctrl.currentSuppliers.push(supplier);
-                }
-                ctrl.suppliers.push(ctrl.currentSuppliers);
-                ctrl.curLevel++;
-                ctrl.curSup = supplier;
-                return ctrl.currentSuppliers;
             }).error(function(data){
                 alert("Error: " + data);
                 return null;
@@ -389,8 +215,14 @@
             }
         };
 
+        ctrl.isObjectEmpty = function(m) {
+            for (var prop in m) {
+                return false;
+            }
+            return true;
+        };
+
         ctrl.msgs = ['Initial Message 1', 'Initial Message 2'];
-        ctrl.cnt = 0;
 
         ctrl.injectMessage = function(msg) {
             // inject message here
@@ -402,15 +234,21 @@
                 if (supplier !== null) {
                     var value = msg.data.dueParts[prop];
                     $log.info('Due parts for ' + supplier.name + ': ' + value);
-                    for (var i=0; i<supplier.metrics.length; i++) {
-                        var metric = supplier.metrics[i];
-                        if (metric.name === 'Parts Due') {
-                            metric.value = value;
-                            if (metric.value > metric.thresholdMax || metric.value < metric.thresholdMin) {
-                                var title = supplier.name + ' has an issue!';
-                                var message = 'Metric ' + metric.name + ' is out of bounds';
-                                notifier.notifyMetric(message, title, supplier);
-                            }
+                    var metric = supplier.metrics["Parts Due"];
+                    if (metric) {
+                        var oldStatus = metric.status;
+                        metric.value = value;
+                        var newStatus = metric.calcAndSetStatus();
+                        if (oldStatus === 0 && newStatus !== 0) {
+                            supplier.hasIssues = true;
+                            var title = supplier.name + ' has an issue!';
+                            var message = 'Metric ' + metric.name + ' is out of bounds';
+                            notifier.notifyMetric(message, title, supplier);
+                        } else if (oldStatus !== 0 && newStatus === 0) {
+                            supplier.updateHasIssues();
+                            var title = supplier.name + ' issue resolved!';
+                            var message = 'Metric ' + metric.name + ' is now within bounds';
+                            notifier.notifyMetric(message, title, supplier);
                         }
                     }
                 } else {
@@ -420,11 +258,6 @@
 
             if (ctrl.msgs.length === 10) ctrl.msgs.shift();
             ctrl.msgs.push(msg.data.currentDate);
-            ctrl.cnt++;
-            if (ctrl.cnt === 10) {
-                ctrl.cnt = 0;
-                notifier.notifyGlobal("Ten new messages arrived", "New data arrived");
-            }
         };
 
         ctrl.switchToView = function(view) {

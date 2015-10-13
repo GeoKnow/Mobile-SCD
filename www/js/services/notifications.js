@@ -5,8 +5,8 @@
 angular.module('scm-notifications-web', [])
     .factory('scmNotifier', function() {
         return {
-            notifyMetric: function (message) {
-                alert(message);
+            notifyMetric: function (message, title) {
+                alert(title + '\n' + message);
             },
             notifyGlobal: function (message) {
                 alert(message);

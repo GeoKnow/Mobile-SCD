@@ -66,7 +66,7 @@ and open the template in the editor.
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <i class="glyphicon" ng-class="{ 'glyphicon-ok-sign': sups.evaluateMetric(sups.currentMetric), 'glyphicon-fire': !sups.evaluateMetric(sups.currentMetric) }"></i>
+                <i class="glyphicon" ng-class="{ 'glyphicon-ok-sign': sups.currentMetric.status === 0, 'glyphicon-fire': sups.currentMetric.status !== 0 }"></i>
                 <span class="modal-title" id="myModalLabel">{{ sups.currentMetric.name }}</span>
             </div>
             <div class="modal-body">
@@ -94,16 +94,11 @@ and open the template in the editor.
 <script type="text/javascript" src="cordova.js"></script>
 <script src="js/services/parameters.js"></script>
 <script src="js/services/notifications.js"></script>
+<script src="js/wiring.js"></script>
 <script src="js/test.js"></script>
+<script src="js/services/supplier-services.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/snap.js"></script>
-
-<script>
-    window.addEventListener('message', function(e){
-        console.log("Got message in root listener:");
-        console.log(e);
-    }, false);
-</script>
 
 </body>
 </html>
