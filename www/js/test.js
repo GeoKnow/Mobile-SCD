@@ -24,6 +24,27 @@
         ctrl.idMessagesView = 3;
         ctrl.currentView = ctrl.idSuppliersView;
 
+        ctrl.modalCurrent = null;
+        ctrl.modalBasics = 1;
+
+        ctrl.openModal = function(modal, $event) {
+            ctrl.modalCurrent = modal;
+            if ($event) {
+                $log.debug('Preventing default');
+                $event.stopImmediatePropagation();
+            } else {
+                $log.debug("Didn't receive $event object");
+            }
+        };
+        ctrl.pullFromContacts = function($event) {
+            $event.stopImmediatePropagation();
+            ctrl.modalCurrent = null;
+        };
+        ctrl.pullFromURI = function($event) {
+            $event.stopImmediatePropagation();
+            ctrl.modalCurrent = null;
+        };
+
         ctrl.supTree = [];
         ctrl.virtualSupplier = {
             parent: null,
@@ -310,6 +331,24 @@
             $timeout(function() { ctrl.injectMessage(e); }, 0);
         }, false);
 
+        $window.addEventListener("offline", function(e) {
+            $log.info("Went offline:");
+            $log.info(e);
+        }, false);
+        $window.addEventListener("online", function(e) {
+            $log.info("Went online:");
+            $log.info(e);
+        }, false);
+        $window.addEventListener("load", function(e) {
+            if (navigator.onLine) {
+                $log.info("Application started in online mode");
+                // do whatever is necessary
+            } else {
+                $log.info("Application started in offline mode");
+                // adapt to the fact that there is no internet connection
+            }
+        }, false);
+
         $document.ready(function(){
             // if it's running in the browser load delivery stream iframe here
             if (typeof cordova === 'undefined') {
@@ -455,9 +494,12 @@
                 $(element).closest('.sup-map-large-container').css({
                     display: 'none'
                 });
+                // TODO: fix this thing with the map
                 $(element).closest('.sup-map-large-container').find('.sup-map-large-nav').on('click', function(event) {
-                    scope.supMapLarge.invalidateSize();
-                    $(element).closest('.sup-map-large-container').toggle();
+                    $(element).closest('.sup-map-large-container').toggle(400, function() {
+                        $timeout(function() { scope.supMapLarge.invalidateSize(); });
+                    });
+
                 });
             });
         }

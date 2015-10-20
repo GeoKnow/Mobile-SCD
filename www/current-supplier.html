@@ -1,6 +1,14 @@
 <div class="sup-block" ng-hide="sups.currentSupplier.parent === null">
     <div class="sup-block-header" ng-hide="sups.currentSupplier.parent === null">
-        Location
+        Basic Information
+        <i ng-click="sups.openModal(sups.modalBasics, $event)" class="sup-btn-menu glyphicon glyphicon-option-horizontal"></i>
+        <div class="options-basics" ng-if="sups.modalCurrent === sups.modalBasics" ng-click="$event.stopImmediatePropagation()">
+            <ul>
+                <li ng-click="sups.pullFromContacts($event)">Add number from Contacts</li>
+                <li ng-click="sups.pullFromURI($event)">Add number from URI</li>
+            </ul>
+        </div>
+        <div class="options-mask" ng-click="sups.modalCurrent = null; $event.stopImmediatePropagation();" ng-if="sups.modalCurrent !== null"></div>
     </div>
     <div class="sup-block-content">
         <div ng-if="sups.currentSupplier.parent !== null" class="sup-map" id="supMapSmall" sup-map-small></div>
@@ -38,6 +46,31 @@
                     {{ sups.currentSupplier.street }}<br>
                     {{ sups.currentSupplier.zipcode }}, {{ sups.currentSupplier.city }}
                 </p>
+            </div>
+        </div>
+
+        <div class="subheader">
+            <span class="header-contact">Contacts</span>
+        </div>
+
+        <div class="sup-number">
+            <div class="sup-info-icon">
+                <i class="glyphicon glyphicon-user"></i>
+            </div>
+
+            <div class="sup-titles">
+                <p>
+                    Contact Name
+                </p>
+            </div>
+
+            <div class="sup-info">
+                <a href="tel:+38163332381">
+                    <i class="glyphicon glyphicon-phone"></i>
+                </a>
+                <a href="sms:+38163332381">
+                    <i class="glyphicon glyphicon-comment"></i>
+                </a>
             </div>
         </div>
     </div>

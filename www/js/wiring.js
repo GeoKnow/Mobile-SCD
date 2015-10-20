@@ -5,4 +5,4 @@
 
 // scm-parameters-{local,hotspot,jpo,eccenca,geoknow}
 // scm-notifications-{web,phone}
-angular.module("mobile-scm", ['scm-parameters-local', 'scm-notifications-web']);
+angular.module("mobile-scm", ['scm-parameters-geoknow', 'scm-notifications-phone', 'ngAnimate']);
