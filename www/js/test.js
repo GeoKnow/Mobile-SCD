@@ -15,7 +15,7 @@
     // App_Code: vUsfPezonTcM0FKG58vYRw
     /////////////////////////////////////
 
-    app.controller("SuppliersController", ['scmParameters', 'scmNotifier', 'supplierService', '$scope', '$http', '$timeout', '$document', '$window', '$log', function(params, notifier, supplierService, $scope, $http, $timeout, $document, $window, $log){
+    app.controller("SuppliersController", ['scmParameters', 'scmNotifier', 'supplierService', '$scope', '$http', '$timeout', '$document', '$window', '$log', '$animate', function(params, notifier, supplierService, $scope, $http, $timeout, $document, $window, $log, $animate){
         var ctrl = this;
 
         ctrl.idSuppliersView = 0;
@@ -26,6 +26,15 @@
 
         ctrl.modalCurrent = null;
         ctrl.modalBasics = 1;
+
+        ctrl.showLargeMap = false;
+        ctrl.mapLarge = null;
+        ctrl.mapLargeLayer = null;
+
+        ctrl.toggleLargeMap = function() {
+            ctrl.showLargeMap = !ctrl.showLargeMap;
+            $log.debug('Map toggled');
+        };
 
         ctrl.openModal = function(modal, $event) {
             ctrl.modalCurrent = modal;
@@ -477,6 +486,57 @@
             });
         }
     });
+
+    app.directive('mapContainer', ['$log', '$animate', function($log, $animate) {
+        $log.debug('Link function mapContainer');
+        return function(scope, element) {
+            // create map
+            scope.sups.mapLarge = L.map('mapLarge', {
+                zoomControl: false
+            }).setView([53.2, 12.3], 15);
+            L.tileLayer('http://tiles.lyrk.org/ls/{z}/{x}/{y}?apikey=87be57815cf747a58ec5d84d8e64ccfa', {
+                detectRetina: true,
+                maxZoom: 19,
+                reuseTiles: false
+            }).addTo(scope.sups.mapLarge);
+            scope.sups.mapLargeLayer = L.featureGroup();
+            scope.sups.mapLargeLayer.addTo(scope.sups.mapLarge);
+            // center and populate based on the current supplier
+            scope.sups.mapLargeLayer.clearLayers();
+            var coordinates = [scope.sups.currentSupplier.latitude,
+                scope.sups.currentSupplier.longitude];
+            scope.sups.mapLarge.setView(coordinates, 14);
+            var icon = L.MakiMarkers.icon({icon: 'star', color: '#F05D00', size: 'l'});
+            L.marker(coordinates, { icon: icon }).addTo(scope.sups.mapLargeLayer);
+            var iconSuppliers = L.MakiMarkers.icon({icon: 'gift', color: '#00AED4', size:'m'});
+            $.each(scope.sups.currentSupplier.suppliers, function(index, sup) {
+                var coord = [sup.latitude, sup.longitude];
+                L.marker(coord, {icon: iconSuppliers}).addTo(scope.sups.mapLargeLayer);
+            });
+            if (scope.sups.mapLargeLayer.getLayers().length > 1)
+                scope.sups.mapLarge.fitBounds(scope.sups.mapLargeLayer.getBounds());
+            $log.debug('Map populated and centered');
+
+            $animate.on('enter', element, function(e, phase) {
+                $log.debug('Entered animate');
+                if (phase === 'start') {
+                    $log.debug('Animation start');
+                    var map = $('#mapLarge');
+                    $log.debug(map.width() + ' x ' + map.height());
+                }
+                if (phase === 'close') {
+                    $log.debug('Animation end');
+                    var map = $('#mapLarge');
+                    $log.debug(map.width() + ' x ' + map.height());
+                }
+            });
+            element.on('$destroy', function() {
+                $log.debug('Destroy called');
+                scope.sups.mapLargeLayer.clearLayers();
+                scope.sups.mapLarge.remove();
+            });
+        }
+    }]);
 
     app.directive('supMapLarge', function($timeout) {
         return function(scope, element) {

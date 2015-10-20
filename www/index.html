@@ -11,8 +11,8 @@ and open the template in the editor.
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
     <script src="js/Leaflet.MakiMarkers.js"></script>
-    <script src="js/angular-1.3.15.js"></script>
-    <script src="js/angular-animate-1.3.15.js"></script>
+    <script src="js/lib/angular-1.4.7/angular.js"></script>
+    <script src="js/lib/angular-1.4.7/angular-animate.js"></script>
     <script src="js/jquery-2.1.3.js"></script>
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
@@ -56,11 +56,11 @@ and open the template in the editor.
     <messages ng-if="sups.currentView === sups.idMessagesView"></messages>
 </div>
 
-<div class="sup-map-large-container">
-    <div class="sup-map-large-nav">
+<div ng-if="sups.showLargeMap" class="sup-map-large-container" map-container>
+    <div class="sup-map-large-nav" ng-click="sups.toggleLargeMap()">
         <i class="glyphicon glyphicon-chevron-up"></i>
     </div>
-    <div id="supMapLarge" class="sup-map-large" sup-map-large></div>
+    <div id="mapLarge" class="sup-map-large" map-large></div>
 </div>
 
 <!--<div class="my-modal" ng-click="sups.modalCurrent = null" ng-if="sups.modalCurrent !== null"></div>-->

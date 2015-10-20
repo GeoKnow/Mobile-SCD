@@ -13,7 +13,7 @@
     <div class="sup-block-content">
         <div ng-if="sups.currentSupplier.parent !== null" class="sup-map" id="supMapSmall" sup-map-small></div>
         <div class="sup-coordinates" ng-hide="sups.currentSupplier.parent === null">
-            <div class="sup-info-icon">
+            <div class="sup-info-icon" ng-click="sups.toggleLargeMap()">
                 <i class="glyphicon glyphicon-map-marker"></i>
             </div>
             <div class="sup-titles">
