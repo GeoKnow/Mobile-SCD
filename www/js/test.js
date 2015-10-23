@@ -22,7 +22,9 @@
         ctrl.idShippingsView = 1;
         ctrl.idOrdersView = 2;
         ctrl.idMessagesView = 3;
+        ctrl.idSearchContactsView = 4;
         ctrl.currentView = ctrl.idSuppliersView;
+        ctrl.contextStack = [];
 
         ctrl.modalCurrent = null;
         ctrl.modalBasics = 1;
@@ -47,7 +49,12 @@
         };
         ctrl.pullFromContacts = function($event) {
             $event.stopImmediatePropagation();
+            ctrl.contextStack.push({
+                supplier: ctrl.currentSupplier,
+                view: ctrl.currentView
+            });
             ctrl.modalCurrent = null;
+            ctrl.currentView = ctrl.idSearchContactsView;
         };
         ctrl.pullFromURI = function($event) {
             $event.stopImmediatePropagation();
@@ -176,10 +183,40 @@
             });
         };
 
+        ctrl.removeNumber = function(numberString, numberIndex) {
+            var message = 'Remove number ' + numberString + ' from supplier ' + ctrl.currentSupplier.name + '?';
+            if (typeof navigator.notification !== 'undefined') {
+                navigator.notification.confirm(message, function(buttonIndex) {
+                    // if other than OK (first button) do nothing
+                    if (buttonIndex > 1) return;
+                    // remove the number
+                    $scope.$applyAsync(function() {
+                        ctrl.currentSupplier.removeNumber(numberIndex);
+                    });
+                });
+            } else {
+                if (confirm) {
+                    ctrl.currentSupplier.removeNumber(numberIndex);
+                }
+            }
+        };
+
         ctrl.selectSupplier = function(sup, closeSnap) {
             // $('.sup-suppliers-items').css({ "display": "none" });
+            ctrl.contextStack.push({
+                supplier: ctrl.currentSupplier,
+                view: ctrl.currentView
+            });
             ctrl.currentSupplier = sup;
             if (closeSnap) $scope.snapper.close();
+        };
+
+        ctrl.back = function() {
+            if (ctrl.contextStack.length > 0) {
+                var ctx = ctrl.contextStack.pop();
+                ctrl.currentSupplier = ctx.supplier;
+                ctrl.currentView = ctx.view;
+            }
         };
 
         ctrl.levelUp = function() {
@@ -564,6 +601,14 @@
             });
         }
     });
+
+    app.directive('searchContacts', function() {
+        return {
+            restrict: "E",
+            templateUrl: "search-contacts.html",
+            controller: "SearchContactsController"
+        }
+    })
 })();
 
 $(document).ready(function (){

@@ -1,0 +1,22 @@
+<section class="contacts-search">
+    <input ng-model="phrase">
+    <i class="glyphicon glyphicon-search"></i>
+</section>
+
+<section class="contacts-list">
+    <ul>
+        <li ng-repeat="contact in contacts | filter: { displayName: phrase }">
+            <div class="contact-name">
+                <span>{{ contact.displayName }}</span>
+            </div>
+            <div class="contact-details">
+                <ul>
+                    <li ng-repeat="number in contact.phoneNumbers" ng-click="addNumber(number)">
+                        <p>{{ number.type }}</p>
+                        <p>{{ number.value }}</p>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</section>

@@ -269,6 +269,10 @@ Supplier styles
     margin-left: 1em;
 }
 
+.sup-number .sup-titles {
+    text-transform: uppercase;
+}
+
 .sup-titles p, .sup-info p {
     margin-bottom: 0;
     margin-top: 0;
@@ -674,4 +678,67 @@ Modal styles
     width: 100%;
     text-align: right;
     display: table-cell;
+}
+
+/* -----------------------------------
+
+Search Contacts Styles
+
+----------------------------------- */
+
+.contacts-search {
+    position: relative;
+}
+
+.contacts-search input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #C6C6C6;
+    font-size: 1.142857em;
+    height: 3em;
+    padding-left: 1em;
+}
+
+.contacts-search input:focus {
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #C6C6C6;
+}
+
+.contacts-search .glyphicon-search {
+    font-size: 1.285664em;
+    color: #C6C6C6;
+    opacity: 0.5;
+    position: absolute;
+    right: 1em;
+    top: 50%;
+    margin-top: -0.4375em;
+}
+
+.contacts-list ul {
+    list-style: none;
+    padding: 0.5em 1em;
+}
+
+.contact-details {
+    padding-bottom: 1em;
+}
+
+.contact-details ul {
+    padding: 0.285714em 0;
+}
+
+.contact-details p {
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.contact-details li {
+    padding: 0.25em 0;
+}
+
+.contact-name {
+    font-size: 1.142857em;
+    font-weight: bold;
+    border-bottom: 1px solid;
 }

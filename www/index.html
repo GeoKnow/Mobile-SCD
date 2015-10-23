@@ -22,7 +22,7 @@ and open the template in the editor.
 <body ng-app="mobile-scm" ng-controller="SuppliersController as sups">
 
 <div class="nav-sups">
-    <a class="nav-back" ng-click="sups.levelUp()"><i class="glyphicon glyphicon-menu-left"></i></a>
+    <a class="nav-back" ng-click="sups.back()"><i class="glyphicon glyphicon-menu-left"></i></a>
     <span class="nav-title">{{sups.currentSupplier.name}}</span>
     <div class="nav-controls">
         <a ng-click="sups.levelUp();"><i class="glyphicon glyphicon-level-up"></i></a>
@@ -41,8 +41,8 @@ and open the template in the editor.
         </div>
     </div>
 </div>
-<div id="snapContent" class="snap-content container nav-below" tree-drawer>
-    <section ng-if="sups.currentView === sups.idSuppliersView" class="sup-list">
+<div ng-switch on="sups.currentView" id="snapContent" class="snap-content container nav-below" tree-drawer>
+    <section ng-switch-default class="sup-list">
         <div class="row">
             <div class="sup-tree col-sm-6 hidden-xs">
                 <suppliers-tree></suppliers-tree>
@@ -53,7 +53,12 @@ and open the template in the editor.
             </div>
         </div>
     </section>
-    <messages ng-if="sups.currentView === sups.idMessagesView"></messages>
+    <messages ng-switch-when="3"></messages> <!-- value of sups.idMessagesView is 3 -->
+    <section ng-switch-when="4">
+        <div class="row">
+            <search-contacts></search-contacts>
+        </div>
+    </section> <!-- value of sups.idSearchContactsView is 4 -->
 </div>
 
 <div ng-if="sups.showLargeMap" class="sup-map-large-container" map-container>
@@ -99,6 +104,7 @@ and open the template in the editor.
 <script src="js/services/notifications.js"></script>
 <script src="js/wiring.js"></script>
 <script src="js/test.js"></script>
+<script src="js/controllers/search-contacts-controller.js"></script>
 <script src="js/services/supplier-services.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/snap.js"></script>

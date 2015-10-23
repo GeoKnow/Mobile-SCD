@@ -20,7 +20,7 @@ angular.module('mobile-scm')
             this.shippings = [];
             this.orders = [];
             this.hasIssues = false;
-            //if (supplier.name === "Continental AG") {
+            this.numbers = [];
             if (this.name === "Fairphone_OS Supplier" || this.name === "Continental AG") {
                 this.shippings = [
                     {
@@ -44,6 +44,18 @@ angular.module('mobile-scm')
                 if (this.metrics[name].status !== 0) return this.hasIssues = true;
             }
             return this.hasIssues = false;
+        };
+
+        Supplier.prototype.removeNumber = function(index) {
+            this.numbers.splice(index, 1);
+        };
+
+        Supplier.prototype.addNumber = function(value, type) {
+            this.numbers.push({
+                number: value,
+                numberClean: value.replace(/ /g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,''),
+                type: type
+            });
         };
 
         function Metric(name, unit, thresholdMax, thresholdMin, value) {

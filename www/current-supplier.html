@@ -49,28 +49,32 @@
             </div>
         </div>
 
-        <div class="subheader">
-            <span class="header-contact">Contacts</span>
-        </div>
-
-        <div class="sup-number">
-            <div class="sup-info-icon">
-                <i class="glyphicon glyphicon-user"></i>
+        <div ng-if="sups.currentSupplier.numbers.length > 0">
+            <div class="subheader">
+                <span class="header-contact">Contacts</span>
             </div>
 
-            <div class="sup-titles">
-                <p>
-                    Contact Name
-                </p>
-            </div>
-
-            <div class="sup-info">
-                <a href="tel:+38163332381">
+            <div class="sup-number" ng-repeat="number in sups.currentSupplier.numbers">
+                <div class="sup-info-icon">
                     <i class="glyphicon glyphicon-phone"></i>
-                </a>
-                <a href="sms:+38163332381">
-                    <i class="glyphicon glyphicon-comment"></i>
-                </a>
+                </div>
+
+                <div class="sup-titles">
+                    <p>{{ number.type }}</p>
+                    <p>{{ number.number}}</p>
+                </div>
+
+                <div class="sup-info">
+                    <a ng-href="{{ 'tel:' + number.numberClean }}">
+                        <i class="glyphicon glyphicon-earphone"></i>
+                    </a>
+                    <a ng-href="{{ 'sms:' + number.numberClean }}">
+                        <i class="glyphicon glyphicon-comment"></i>
+                    </a>
+                    <a>
+                        <i ng-click="sups.removeNumber(number.number, $index)" class="glyphicon glyphicon-remove"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
