@@ -338,6 +338,8 @@
 
         $document.on('deviceready', function() {
             if (typeof cordova !== 'undefined') {
+                $log.info('Initializing contacts');
+                supplierService.getContacts(function(){});
                 $log.info('Enabling background mode ...');
                 if (typeof cordova.plugins.backgroundMode === 'undefined') {
                     $log.info('Didn\'t find backgroundMode plugin');

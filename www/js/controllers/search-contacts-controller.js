@@ -4,7 +4,7 @@
 
 angular.module('mobile-scm')
 
-    .controller('SearchContactsController', ['$scope', '$log', function($scope, $log) {
+    .controller('SearchContactsController', ['$scope', '$log', 'supplierService', function($scope, $log, supplierService) {
         var sups = $scope.sups;
         $scope.phrase = '';
         $scope.contacts = [];
@@ -16,8 +16,9 @@ angular.module('mobile-scm')
 
         if (typeof cordova !== 'undefined' && typeof navigator.contacts !== 'undefined') {
             $log.debug('Acquiring contacts');
-            navigator.contacts.find([/*navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name, */navigator.contacts.fieldType.phoneNumbers],
-                populateContactsArray, function() { $log.error('There was an error while acquiring contacts')});
+            supplierService.getContacts(populateContactsArray);
+            //navigator.contacts.find([/*navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name, */navigator.contacts.fieldType.phoneNumbers],
+            //    populateContactsArray, function() { $log.error('There was an error while acquiring contacts')});
         } else {
             $scope.contacts = [
                 {

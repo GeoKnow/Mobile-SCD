@@ -89,6 +89,55 @@ angular.module('mobile-scm')
             return this.status = this.violation();
         };
 
+        var contacts = [
+            {
+                displayName: 'Pera',
+                phoneNumbers: [
+                    {
+                        type: 'home',
+                        value: '063 332-381'
+                    }
+                ]
+            },
+            {
+                displayName: 'Zika',
+                phoneNumbers: [
+                    {
+                        type: 'home',
+                        value: '061 6345-789'
+                    },
+                    {
+                        type: 'work',
+                        value: '063/332-381'
+                    }
+                ]
+            }
+        ];
+
+        function getContacts(cbFunc) {
+            function setContactsAndCall(c) {
+                var i=0;
+                while (i < c.length) {
+                    if (typeof c[i].phoneNumbers === 'undefined' || c[i].phoneNumbers === null || c[i].phoneNumbers.length === 0) {
+                        c.splice(i,1);
+                    } else {
+                        i++;
+                    }
+                }
+                contacts = c;
+                console.log('Setting contacts to: ');
+                console.log(c);
+                cbFunc(contacts);
+            }
+
+            if (typeof cordova !== 'undefined' && typeof navigator.contacts !== 'undefined' && contacts.length < 5) {
+                navigator.contacts.find([/*navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name, */navigator.contacts.fieldType.phoneNumbers],
+                    setContactsAndCall, function() { $log.error('There was an error while acquiring contacts')});
+            } else {
+                cbFunc(contacts);
+            }
+        }
+
         return {
             createSupplier: function(uri, name, latitude, longitude, city, street, zipcode) {
                 var sup = new Supplier(uri, name, latitude, longitude, city, street, zipcode);
@@ -104,6 +153,7 @@ angular.module('mobile-scm')
                 var metrics = sup.metrics;
                 metrics["Troubled Suppliers"] = new Metric("Troubled Suppliers", "", 2, undefined, 0);
                 return sup;
-            }
+            },
+            getContacts: getContacts
         }
 });
