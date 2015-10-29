@@ -117,9 +117,9 @@
     <div class="sup-block-content">
         <div class="sup-shipping" ng-repeat="s in sups.currentSupplier.shippings">
             <div class="sup-shipping-icon">
-                <i class="glyphicon" ng-class="{ 'glyphicon-arrow-left': s.incomming, 'glyphicon-arrow-right': !s.incomming }"></i>
+                <i class="glyphicon" ng-class="{ 'glyphicon-arrow-left': sups.isShippingIncoming(s), 'glyphicon-arrow-right': !sups.isShippingIncoming(s) }"></i>
             </div>
-            <span class="sup-shipping-info">{{ s.other }}<br/>{{ s.quantity }} {{ s.product }}(s)</span>
+            <span class="sup-shipping-info">{{ sups.getOther(s) + ' on ' + s.prettyDate() }}<br/>{{ s.count }} {{ s.product }}(s)</span>
             <div class="sup-shipping-star" ng-click="sups.trackShipping(s)">
                 <i class="glyphicon glyphicon-star" ng-class="{ 'selected': s.tracked }"></i>
             </div>

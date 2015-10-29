@@ -26,6 +26,9 @@
         ctrl.currentView = ctrl.idSuppliersView;
         ctrl.contextStack = [];
 
+        ctrl.orders = supplierService.getOrders();
+        ctrl.shippings = supplierService.getShippings();
+
         ctrl.modalCurrent = null;
         ctrl.modalBasics = 1;
 
@@ -282,6 +285,21 @@
             }
         };
 
+        ctrl.isShippingIncoming = function(s) {
+            if (ctrl.currentSupplier.codename === s.connectionTargetId) return true;
+            return false;
+        };
+
+        ctrl.isOrderIncoming = function(o) {
+            if (ctrl.currentSupplier.codename === o.connectionTargetId) return true;
+            return false;
+        };
+
+        ctrl.getOther = function(s) {
+            if (ctrl.currentSupplier.codename === s.connectionTargetId) return s.connectionSourceId;
+            return s.connectionTargetId;
+        };
+
         ctrl.isObjectEmpty = function(m) {
             for (var prop in m) {
                 return false;
@@ -295,6 +313,19 @@
             // inject message here
             $log.info('Received message');
             $log.info(msg.data);
+
+            for (var i=0; i<msg.data.orders.length; i++) {
+                var curOrder = supplierService.addOrder(msg.data.orders[i]);
+                for (var j=0; j<ctrl.suppliersArray.length; j++) {
+                    ctrl.suppliersArray[j].addOrder(curOrder);
+                }
+            }
+            for (i=0; i<msg.data.shippings.length; i++) {
+                var curShipping = supplierService.addShipping(msg.data.shippings[i]);
+                for (j=0; j<ctrl.suppliersArray.length; j++) {
+                    ctrl.suppliersArray[j].addShipping(curShipping);
+                }
+            }
 
             for (var prop in msg.data.dueParts) {
                 var supplier = ctrl.findSupplierByCodename(ctrl.supTree, prop);

@@ -21,22 +21,22 @@ angular.module('mobile-scm')
             this.orders = [];
             this.hasIssues = false;
             this.numbers = [];
-            if (this.name === "Fairphone_OS Supplier" || this.name === "Continental AG") {
-                this.shippings = [
-                    {
-                        incomming: true,
-                        other: "Supplier X",
-                        quantity: 3,
-                        product: "ProductX"
-                    },
-                    {
-                        incomming: false,
-                        other: "Supplier Y",
-                        quantity: 4,
-                        product: "ProductY"
-                    }
-                ];
-            }
+            //if (this.name === "Fairphone_OS Supplier" || this.name === "Continental AG") {
+            //    this.shippings = [
+            //        {
+            //            incomming: true,
+            //            other: "Supplier X",
+            //            quantity: 3,
+            //            product: "ProductX"
+            //        },
+            //        {
+            //            incomming: false,
+            //            other: "Supplier Y",
+            //            quantity: 4,
+            //            product: "ProductY"
+            //        }
+            //    ];
+            //}
         }
 
         Supplier.prototype.updateHasIssues = function() {
@@ -56,6 +56,22 @@ angular.module('mobile-scm')
                 numberClean: value.replace(/ /g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,''),
                 type: type
             });
+        };
+
+        Supplier.prototype.addOrder = function(o) {
+            if (o.connectionSourceId === this.codename || o.connectionTargetId === this.codename) {
+                this.orders.push(o);
+                // TODO: additional logic, like removing older orders
+                if (this.orders.length === 10) this.orders.shift();
+            }
+        };
+
+        Supplier.prototype.addShipping = function(s) {
+            if (s.connectionSourceId === this.codename || s.connectionTargetId === this.codename) {
+                this.shippings.push(s);
+                // TODO: additional logic, like removing older shippings
+                if (this.shippings.length === 10) this.shippings.shift();
+            }
         };
 
         function Metric(name, unit, thresholdMax, thresholdMin, value) {
@@ -138,6 +154,77 @@ angular.module('mobile-scm')
             }
         }
 
+        var orders = [];
+        var shippings = [];
+        var ordersMap = {};
+        var shippingsMap = {};
+
+        function getDateBroken(date) {
+            var dateObject = {
+                date: null,
+                time: null,
+                zone: null
+            };
+            var tPos = date.indexOf('T');
+            var zPos = date.indexOf('+');
+            if (zPos < 0) zPos = date.indexOf('-');
+            var curEnd = date.length;
+
+            if (zPos >= 0) {
+                dateObject.zone = date.substring(zPos);
+                curEnd = zPos;
+            }
+            if (tPos >= 0) {
+                dateObject.time = date.substring(tPos + 1, curEnd);
+                curEnd = tPos;
+            }
+            dateObject.date = date.substring(0, curEnd);
+            return dateObject;
+        }
+
+        function prettyDate(dateBroken) {
+            var curDate = new Date();
+            var curYear = curDate.getFullYear();
+            var curMonth = curDate.getMonth();
+            if (curMonth < 10) curMonth = '0' + curMonth;
+            var curDay = curDate.getDate();
+            if (curDay < 10) curDay = '0' + curDay;
+            var curDateString = curYear + '-' + curMonth + '-' + curDay;
+
+            if (dateBroken.date === curDateString) return dateBroken.time + dateBroken.zone;
+            else return dateBroken.date;
+        }
+
+        function addOrder(o) {
+            o.status = "Active";
+            o.product = "ProductX";
+            o.remaining = o.count;
+            o.tracked = false;
+            o.dateBroken = getDateBroken(o.date);
+            o.reduceCount = function(cnt) {
+                this.remaining -= cnt;
+                if (this.remaining < 1) this.status = "Completed";
+            };
+            o.prettyDate = function() {
+                return prettyDate(this.dateBroken);
+            };
+            orders.push(o);
+            ordersMap[o.uri] = o;
+            return o;
+        }
+
+        function addShipping(s) {
+            s.product = "ProductX";
+            s.tracked = false;
+            s.dateBroken = getDateBroken(s.date);
+            s.prettyDate = function() {
+                return prettyDate(this.dateBroken);
+            };
+            shippings.push(s);
+            shippingsMap[s.uri] = s;
+            return s;
+        }
+
         return {
             createSupplier: function(uri, name, latitude, longitude, city, street, zipcode) {
                 var sup = new Supplier(uri, name, latitude, longitude, city, street, zipcode);
@@ -154,6 +241,10 @@ angular.module('mobile-scm')
                 metrics["Troubled Suppliers"] = new Metric("Troubled Suppliers", "", 2, undefined, 0);
                 return sup;
             },
-            getContacts: getContacts
+            getContacts: getContacts,
+            addOrder: addOrder,
+            addShipping: addShipping,
+            getOrders: function() { return orders; },
+            getShippings: function() { return shippings; }
         }
 });
