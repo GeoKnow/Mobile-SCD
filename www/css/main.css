@@ -306,6 +306,14 @@ Supplier styles
     margin: 1em 0;
 }
 
+.sup-shipping.sup-shipping-completed .sup-shipping-info {
+    color: #C6C6C6;
+}
+
+.sup-shipping.sup-shipping-overdue .sup-shipping-info {
+    color: #ff3f36;
+}
+
 .sup-suppliers-item-name, .sup-metric-name, .sup-metric-info, .sup-shipping-info {
     margin-left: 1em;
 }

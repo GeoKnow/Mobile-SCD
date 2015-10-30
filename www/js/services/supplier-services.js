@@ -5,6 +5,14 @@
 angular.module('mobile-scm')
     .factory('supplierService', function() {
 
+        var curDate = new Date();
+        var curYear = curDate.getFullYear();
+        var curMonth = curDate.getMonth();
+        if (curMonth < 10) curMonth = '0' + curMonth;
+        var curDay = curDate.getDate();
+        if (curDay < 10) curDay = '0' + curDay;
+        var curDateString = curYear + '-' + curMonth + '-' + curDay;
+
         function Supplier(uri, name, latitude, longitude, city, street, zipcode) {
             this.latitude = latitude;
             this.longitude = longitude;
@@ -183,30 +191,27 @@ angular.module('mobile-scm')
         }
 
         function prettyDate(dateBroken) {
-            var curDate = new Date();
-            var curYear = curDate.getFullYear();
-            var curMonth = curDate.getMonth();
-            if (curMonth < 10) curMonth = '0' + curMonth;
-            var curDay = curDate.getDate();
-            if (curDay < 10) curDay = '0' + curDay;
-            var curDateString = curYear + '-' + curMonth + '-' + curDay;
-
             if (dateBroken.date === curDateString) return dateBroken.time + dateBroken.zone;
             else return dateBroken.date;
         }
 
         function addOrder(o) {
-            o.status = "Active";
+            // status values: 0 - in progress; 1 - overdue; 2 - completed
+            o.status = 0;
             o.product = "ProductX";
             o.remaining = o.count;
             o.tracked = false;
             o.dateBroken = getDateBroken(o.date);
+            o.dueDateBroken = getDateBroken(o.dueDate);
             o.reduceCount = function(cnt) {
                 this.remaining -= cnt;
-                if (this.remaining < 1) this.status = "Completed";
+                if (this.remaining < 1) this.status = 2;
             };
             o.prettyDate = function() {
                 return prettyDate(this.dateBroken);
+            };
+            o.prettyDueDate = function() {
+                return prettyDate(this.dueDateBroken);
             };
             orders.push(o);
             ordersMap[o.uri] = o;
@@ -220,9 +225,21 @@ angular.module('mobile-scm')
             s.prettyDate = function() {
                 return prettyDate(this.dateBroken);
             };
+            var order = ordersMap[s.order];
+            if (order) order.reduceCount(s.count);
             shippings.push(s);
             shippingsMap[s.uri] = s;
             return s;
+        }
+
+        function setCurDateString(dateString) {
+            curDateString = dateString;
+            for (var i=0; i<orders.length; i++) {
+                var curOrder = orders[i];
+                if (curOrder.remaining > 0 && curOrder.dueDateBroken.date < dateString) {
+                    curOrder.status = 1;
+                }
+            }
         }
 
         return {
@@ -244,6 +261,7 @@ angular.module('mobile-scm')
             getContacts: getContacts,
             addOrder: addOrder,
             addShipping: addShipping,
+            setCurDateString: setCurDateString,
             getOrders: function() { return orders; },
             getShippings: function() { return shippings; }
         }

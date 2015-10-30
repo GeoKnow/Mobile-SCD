@@ -237,8 +237,22 @@
         };
 
         ctrl.trackShipping = function(s){
-            if (s.tracked) s.tracked = false;
-            else s.tracked = true;
+            if (s.tracked) {
+                s.tracked = false;
+                s.deregisterWatcher();
+            }
+            else {
+                s.tracked = true;
+                s.deregisterWatcher = $scope.$watch(function() { return s.status; }, function(newVal, oldVal) {
+                    if (newVal === oldVal) return;
+                    var status = "";
+                    if (newVal === 1) status = "overdue";
+                    if (newVal === 2) status = "completed";
+                    var msg = 'Order of ' + s.product + '(s) from ' + s.connectionSourceId + ' to ' +
+                        s.connectionTargetId + ' is ' + status;
+                    notifier.notifyGlobal(msg, 'Order Update');
+                });
+            }
         };
 
         ctrl.notify = function (metric) {
@@ -314,17 +328,25 @@
             $log.info('Received message');
             $log.info(msg.data);
 
+            var newCurDateBroken = null;
+
             for (var i=0; i<msg.data.orders.length; i++) {
                 var curOrder = supplierService.addOrder(msg.data.orders[i]);
+                newCurDateBroken = curOrder.dateBroken;
                 for (var j=0; j<ctrl.suppliersArray.length; j++) {
                     ctrl.suppliersArray[j].addOrder(curOrder);
                 }
             }
             for (i=0; i<msg.data.shippings.length; i++) {
                 var curShipping = supplierService.addShipping(msg.data.shippings[i]);
+                newCurDateBroken = curShipping.dateBroken;
                 for (j=0; j<ctrl.suppliersArray.length; j++) {
                     ctrl.suppliersArray[j].addShipping(curShipping);
                 }
+            }
+
+            if (newCurDateBroken) {
+                supplierService.setCurDateString(newCurDateBroken.date);
             }
 
             for (var prop in msg.data.dueParts) {
