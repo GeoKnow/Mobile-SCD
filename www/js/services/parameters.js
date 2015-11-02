@@ -12,6 +12,16 @@ angular.module('scm-parameters-hotspot', [])
         }
     });
 
+angular.module('scm-parameters-hotspot2', [])
+    .factory('scmParameters', function() {
+        return {
+            endpoint: "http://192.168.43.222:8890/sparql",
+            graph: "http://www.xybermotive.com/geoknow/",
+            middle: "?default-graph-uri=" + encodeURIComponent("http://www.xybermotive.com/geoknow/") + "&",
+            dashboard: "http://192.168.43.222:9000"
+        }
+    });
+
 angular.module('scm-parameters-local', [])
     .factory('scmParameters', function() {
         return {

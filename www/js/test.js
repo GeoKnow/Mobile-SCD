@@ -36,6 +36,9 @@
         ctrl.mapLarge = null;
         ctrl.mapLargeLayer = null;
 
+        ctrl.showOrders = true;
+        ctrl.showShippings = true;
+
         ctrl.toggleLargeMap = function() {
             ctrl.showLargeMap = !ctrl.showLargeMap;
             $log.debug('Map toggled');
@@ -211,6 +214,8 @@
                 view: ctrl.currentView
             });
             ctrl.currentSupplier = sup;
+            ctrl.showOrders = true;
+            ctrl.showShippings = true;
             if (closeSnap) $scope.snapper.close();
         };
 
@@ -663,7 +668,36 @@
             templateUrl: "search-contacts.html",
             controller: "SearchContactsController"
         }
-    })
+    });
+
+    app.animation(".sup-block-content", function() {
+        return {
+            enter: function(element, done) {
+                console.log('Entering');
+                var elem = $(element).closest('.sup-block');
+                var offset = $(elem).offset().top;
+                var height = $(elem).height();
+                var winElem = $('#snapContent');
+                var winOffset = winElem.offset().top + 3;
+                var winHieght = $(window).height() - winOffset;
+                var yBump = offset + height - winHieght;
+                if (yBump < 0) yBump = 0;
+                if (yBump > offset-winOffset) yBump = offset - winOffset;
+                var scrollPos = winElem.scrollTop() + yBump;
+                console.log('Scrolling to: ' + scrollPos);
+                $(element).hide();
+                //$(element).css("display", "none");
+                $(element).slideDown(400, done);
+                winElem.animate({
+                    scrollTop: scrollPos
+                }, 400);
+            },
+            leave: function(element, done) {
+                console.log('Leaving');
+                $(element).slideUp(400, done);
+            }
+        }
+    });
 })();
 
 $(document).ready(function (){
