@@ -679,8 +679,8 @@
                 var height = $(elem).height();
                 var winElem = $('#snapContent');
                 var winOffset = winElem.offset().top + 3;
-                var winHieght = $(window).height() - winOffset;
-                var yBump = offset + height - winHieght;
+                var winHeight = $(window).height() - winOffset;
+                var yBump = offset + height - winHeight;
                 if (yBump < 0) yBump = 0;
                 if (yBump > offset-winOffset) yBump = offset - winOffset;
                 var scrollPos = winElem.scrollTop() + yBump;
