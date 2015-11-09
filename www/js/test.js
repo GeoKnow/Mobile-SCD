@@ -508,6 +508,13 @@
         }
     });
 
+    app.directive("ordersView", function() {
+        return {
+            restrict: "E",
+            templateUrl: "orders-view.html"
+        }
+    });
+
     app.directive("currentSupplier", function(){
         return {
             restrict: "E",
@@ -680,6 +687,35 @@
                 var winElem = $('#snapContent');
                 var winOffset = winElem.offset().top + 3;
                 var winHeight = $(window).height() - winOffset;
+                var yBump = offset + height - winHeight;
+                if (yBump < 0) yBump = 0;
+                if (yBump > offset-winOffset) yBump = offset - winOffset;
+                var scrollPos = winElem.scrollTop() + yBump;
+                console.log('Scrolling to: ' + scrollPos);
+                $(element).hide();
+                //$(element).css("display", "none");
+                $(element).slideDown(400, done);
+                winElem.animate({
+                    scrollTop: scrollPos
+                }, 400);
+            },
+            leave: function(element, done) {
+                console.log('Leaving');
+                $(element).slideUp(400, done);
+            }
+        }
+    });
+
+    app.animation(".os-content", function() {
+        return {
+            enter: function(element, done) {
+                console.log('Entering');
+                var elem = $(element).closest('.os-block');
+                var offset = $(elem).offset().top;
+                var height = $(elem).height();
+                var winElem = $('#snapContent');
+                var winOffset = winElem.offset().top + 3;
+                var winHeight = $(window).height();
                 var yBump = offset + height - winHeight;
                 if (yBump < 0) yBump = 0;
                 if (yBump > offset-winOffset) yBump = offset - winOffset;

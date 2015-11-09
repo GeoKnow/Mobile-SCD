@@ -750,3 +750,73 @@ Search Contacts Styles
     font-weight: bold;
     border-bottom: 1px solid;
 }
+
+/* ------------------------------------
+
+Styles for Orders and Shippings Views
+
+------------------------------------ */
+
+.os-block {
+    border-bottom: 1px solid #C6C6C6;
+    /*padding: 1em;*/
+    background: white;
+}
+
+.os-header {
+    display: flex;
+    align-items: center;
+    padding: 1em 0;
+    width: 100%;
+}
+
+.os-header-icon {
+    min-width: 4em;
+    width: 4em;
+    text-align: center;
+}
+
+.os-header-content {
+    flex-grow: 1;
+    overflow-x: hidden;
+}
+
+.os-header-track {
+    min-width: 4em;
+    width: 4em;
+    text-align: center;
+    color: #C6C6C6;
+}
+
+.os-header-track .glyphicon {
+    font-size: 1.285714em;
+}
+
+.os-header-track .glyphicon.glyphicon-star.selected {
+    color: #EFDA00;
+}
+
+.os-content {
+
+}
+
+.os-content-row {
+    padding-left: 4em;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.os-content:last-child {
+    padding-bottom: 1em;
+}
+
+.os-content-prop {
+    overflow-x: hidden;
+}
+
+.os-content-val {
+    flex-grow: 1;
+    text-align: right;
+    margin-right: 1em;
+}

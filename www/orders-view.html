@@ -1,0 +1,57 @@
+<div class="os-block" ng-repeat="o in sups.orders" ng-init="expanded = false">
+    <div class="os-header">
+        <div class="os-header-icon">
+            <i class="glyphicon glyphicon-ok"></i>
+        </div>
+        <div class="os-header-content" ng-click="expanded = !expanded"ok>
+            <span>{{ o.connectionSourceId }}</span>
+            <br>
+            <span>{{ o.connectionTargetId }}</span>
+        </div>
+        <div class="os-header-track">
+            <i class="glyphicon glyphicon-star" ng-click="sups.trackShipping(o)" ng-class="{ 'selected': o.tracked }"></i>
+        </div>
+    </div>
+    <div class="os-content" ng-if="expanded">
+        <div class="os-content-row">
+            <div class="os-content-prop">
+                <span>Product</span>
+            </div>
+            <div class="os-content-val">
+                <span>{{ o.product }}</span>
+            </div>
+        </div>
+        <div class="os-content-row">
+            <div class="os-content-prop">
+                <span>Date</span>
+            </div>
+            <div class="os-content-val">
+                <span>{{ o.prettyDate() }}</span>
+            </div>
+        </div>
+        <div class="os-content-row">
+            <div class="os-content-prop">
+                <span>Due</span>
+            </div>
+            <div class="os-content-val">
+                <span>{{ o.prettyDueDate() }}</span>
+            </div>
+        </div>
+        <div class="os-content-row">
+            <div class="os-content-prop">
+                <span>Quantity</span>
+            </div>
+            <div class="os-content-val">
+                <span>{{ o.count }}</span>
+            </div>
+        </div>
+        <div class="os-content-row">
+            <div class="os-content-prop">
+                <span>Remaining</span>
+            </div>
+            <div class="os-content-val">
+                <span>{{ o.remaining }}</span>
+            </div>
+        </div>
+    </div>
+</div>
