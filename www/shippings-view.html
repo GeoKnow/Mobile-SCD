@@ -1,0 +1,41 @@
+<div class="os-block" ng-repeat="s in sups.shippings" ng-init="expanded = false">
+    <div class="os-header">
+        <div class="os-header-icon">
+            <i class="glyphicon glyphicon-qrcode"></i>
+        </div>
+        <div class="os-header-content" ng-click="expanded = !expanded">
+            <span>{{ s.connectionSourceId }}</span>
+            <br>
+            <span>{{ s.connectionTargetId }}</span>
+        </div>
+        <div class="os-header-track">
+            <i class="glyphicon glyphicon-bookmark"></i>
+        </div>
+    </div>
+    <div class="os-content" ng-if="expanded">
+        <div class="os-content-row">
+            <div class="os-content-prop">
+                <span>Product</span>
+            </div>
+            <div class="os-content-val">
+                <span>{{ s.product }}</span>
+            </div>
+        </div>
+        <div class="os-content-row">
+            <div class="os-content-prop">
+                <span>Date</span>
+            </div>
+            <div class="os-content-val">
+                <span>{{ s.prettyDate() }}</span>
+            </div>
+        </div>
+        <div class="os-content-row">
+            <div class="os-content-prop">
+                <span>Quantity</span>
+            </div>
+            <div class="os-content-val">
+                <span>{{ s.count }}</span>
+            </div>
+        </div>
+    </div>
+</div>

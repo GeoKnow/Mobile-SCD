@@ -515,6 +515,13 @@
         }
     });
 
+    app.directive("shippingsView", function() {
+        return {
+            restrict: "E",
+            templateUrl: "shippings-view.html"
+        }
+    });
+
     app.directive("currentSupplier", function(){
         return {
             restrict: "E",
