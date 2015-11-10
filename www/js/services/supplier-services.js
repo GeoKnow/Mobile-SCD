@@ -47,11 +47,20 @@ angular.module('mobile-scm')
             //}
         }
 
+        var virtualSupplier = {};
+
         Supplier.prototype.updateHasIssues = function() {
+            var oldStatus = this.hasIssues;
+            var newStatus = false;
             for (var name in this.metrics) {
-                if (this.metrics[name].status !== 0) return this.hasIssues = true;
+                if (this.metrics[name].status !== 0) {
+                    newStatus = true;
+                    break;
+                }
             }
-            return this.hasIssues = false;
+            if (!oldStatus && newStatus) virtualSupplier.metrics["Troubled Suppliers"].value++;
+            else if (oldStatus && !newStatus) virtualSupplier.metrics["Troubled Suppliers"].value--;
+            return this.hasIssues = newStatus;
         };
 
         Supplier.prototype.removeNumber = function(index) {
@@ -256,6 +265,8 @@ angular.module('mobile-scm')
                 var sup = new Supplier("http://pupin.rs/geoknow/virtualSupplier", "Supply Chain Network");
                 var metrics = sup.metrics;
                 metrics["Troubled Suppliers"] = new Metric("Troubled Suppliers", "", 2, undefined, 0);
+                metrics["Total Parts Due"] = new Metric("Total Parts Due", "", undefined, undefined, 0);
+                virtualSupplier = sup; //TODO it would be better to have singleton virtual supplier and to require parent in createSupplier method
                 return sup;
             },
             getContacts: getContacts,

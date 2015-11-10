@@ -74,6 +74,7 @@
             suppliers: []
         };
         ctrl.currentSupplier = ctrl.virtualSupplier;
+        ctrl.currentOrder = null;
         ctrl.currentMetric = {};
 
         ctrl.searchPhrase = "";
@@ -219,6 +220,14 @@
             if (closeSnap) $scope.snapper.close();
         };
 
+        ctrl.selectOrder = function(order) {
+            ctrl.contextStack.push({
+                supplier: ctrl.currentSupplier,
+                view: ctrl.currentView,
+                order: ctrl.currentOrder
+            });
+        };
+
         ctrl.back = function() {
             if (ctrl.contextStack.length > 0) {
                 var ctx = ctrl.contextStack.pop();
@@ -362,15 +371,16 @@
                     var metric = supplier.metrics["Parts Due"];
                     if (metric) {
                         var oldStatus = metric.status;
+                        ctrl.virtualSupplier.metrics["Total Parts Due"].value += value - metric.value;
                         metric.value = value;
                         var newStatus = metric.calcAndSetStatus();
                         if (oldStatus === 0 && newStatus !== 0) {
-                            supplier.hasIssues = true;
+                            //supplier.hasIssues = true;
                             var title = supplier.name + ' has an issue!';
                             var message = 'Metric ' + metric.name + ' is out of bounds';
                             notifier.notifyMetric(message, title, supplier);
                         } else if (oldStatus !== 0 && newStatus === 0) {
-                            supplier.updateHasIssues();
+                            //supplier.updateHasIssues();
                             var title = supplier.name + ' issue resolved!';
                             var message = 'Metric ' + metric.name + ' is now within bounds';
                             notifier.notifyMetric(message, title, supplier);
@@ -379,6 +389,10 @@
                 } else {
                     $log.info('Couldn\'t find supplier with codename ' + prop);
                 }
+            }
+
+            for (var k=0; k<ctrl.suppliersArray.length; k++) {
+                ctrl.suppliersArray[k].updateHasIssues();
             }
 
             if (ctrl.msgs.length === 10) ctrl.msgs.shift();
