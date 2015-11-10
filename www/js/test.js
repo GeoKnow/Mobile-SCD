@@ -395,6 +395,11 @@
         ctrl.dashboardHost = params.dashboard;
 
         $document.on('deviceready', function() {
+            $document.on("backbutton", function() {
+                $scope.$applyAsync(function () {
+                    ctrl.back();
+                });
+            });
             if (typeof cordova !== 'undefined') {
                 $log.info('Initializing contacts');
                 supplierService.getContacts(function(){});
@@ -693,7 +698,7 @@
                 var height = $(elem).height();
                 var winElem = $('#snapContent');
                 var winOffset = winElem.offset().top + 3;
-                var winHeight = $(window).height() - winOffset;
+                var winHeight = $(window).height();
                 var yBump = offset + height - winHeight;
                 if (yBump < 0) yBump = 0;
                 if (yBump > offset-winOffset) yBump = offset - winOffset;
