@@ -797,7 +797,9 @@ Styles for Orders and Shippings Views
 }
 
 .os-content {
-
+    background: #E8E8E8;
+    padding: 1em 0;
+    box-shadow: 0 0 10px 0 #AFAFAF inset;
 }
 
 .os-content-row {
@@ -808,7 +810,7 @@ Styles for Orders and Shippings Views
 }
 
 .os-content:last-child {
-    padding-bottom: 1em;
+    /*padding-bottom: 1em;*/
 }
 
 .os-content-prop {
