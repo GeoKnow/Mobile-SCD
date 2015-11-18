@@ -1,0 +1,22 @@
+{
+  "@context": {
+    "vcard": "http://www.w3.org/2006/vcard/ns#",
+    "ns": "http://geoknow.imp.bg.ac.rs/people/"
+  },
+  "@graph": [
+    {
+      "@id": "ns:Vuk",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Vuk Mijovic",
+      "vcard:hasTelephone": ["tel:+38163332381", "tel:+381112438888"]
+    },
+    {
+      "@id": "tel:+38163332381",
+      "@type": "vcard:Cell"
+    },
+    {
+      "@id": "tel:+381112438888",
+      "@type": "vcard:Voice"
+    }
+  ]
+}

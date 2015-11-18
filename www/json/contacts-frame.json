@@ -1,0 +1,8 @@
+{
+  "@context": {
+    "vcard": "http://www.w3.org/2006/vcard/ns#",
+    "ns": "http://geoknow.imp.bg.ac.rs/people/"
+  },
+//  "vcard:hasTelephone": {},
+  "@id": null
+}
