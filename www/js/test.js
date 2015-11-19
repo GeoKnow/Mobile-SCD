@@ -15,7 +15,7 @@
     // App_Code: vUsfPezonTcM0FKG58vYRw
     /////////////////////////////////////
 
-    app.controller("SuppliersController", ['scmParameters', 'scmNotifier', 'supplierService', '$scope', '$http', '$timeout', '$document', '$window', '$log', '$animate', function(params, notifier, supplierService, $scope, $http, $timeout, $document, $window, $log, $animate){
+    app.controller("SuppliersController", ['msgProvider', 'scmParameters', 'scmNotifier', 'supplierService', '$scope', '$http', '$timeout', '$document', '$window', '$log', '$animate', function(msgProvider, params, notifier, supplierService, $scope, $http, $timeout, $document, $window, $log, $animate){
         var ctrl = this;
 
         ctrl.idSuppliersView = 0;
@@ -242,6 +242,10 @@
             }
         };
 
+        ctrl.step = function() {
+            msgProvider.step();
+        };
+
         ctrl.isCurrent = function(supplier){
             return supplier === ctrl.currentSupplier;
         };
@@ -399,6 +403,8 @@
             ctrl.msgs.push(msg.data.currentDate);
         };
 
+        msgProvider.addCallback(ctrl.injectMessage);
+
         ctrl.switchToView = function(view) {
             if (ctrl.currentView !== view) {
                 ctrl.currentView = view;
@@ -449,12 +455,7 @@
                 }
                 $log.info('Background mode enabled');
             }
-            $('body').prepend('<iframe src="' + ctrl.dashboardHost + '/deliveryStream" frameborder="0" style="display:none"></iframe>');
         });
-
-        $window.addEventListener('message', function(e) {
-            $timeout(function() { ctrl.injectMessage(e); }, 0);
-        }, false);
 
         $window.addEventListener("offline", function(e) {
             $log.info("Went offline:");
@@ -474,12 +475,6 @@
             }
         }, false);
 
-        $document.ready(function(){
-            // if it's running in the browser load delivery stream iframe here
-            if (typeof cordova === 'undefined') {
-                $('body').prepend('<iframe src="' + ctrl.dashboardHost + '/deliveryStream" frameborder="0" style="display:none"></iframe>');
-            }
-        });
     }]);
 
     /////////////////////////////////////

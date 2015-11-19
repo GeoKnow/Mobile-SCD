@@ -25,7 +25,7 @@ and open the template in the editor.
     <a class="nav-back" ng-click="sups.back()"><i class="glyphicon glyphicon-menu-left"></i></a>
     <span class="nav-title">{{sups.currentSupplier.name}}</span>
     <div class="nav-controls">
-        <a ng-click="sups.levelUp();"><i class="glyphicon glyphicon-level-up"></i></a>
+        <a ng-click="sups.step();"><i class="glyphicon glyphicon-step-forward"></i></a>
         <a ng-click="sups.toggleTreeView()"><i class="glyphicon glyphicon-list"></i></a>
         <a ng-click="sups.getSuppliersTree();"><i class="glyphicon glyphicon-refresh"></i></a>
     </div>
@@ -113,6 +113,7 @@ and open the template in the editor.
 <script src="js/services/parameters.js"></script>
 <script src="js/services/notifications.js"></script>
 <script src="js/wiring.js"></script>
+<script src="js/services/comm-services.js"></script>
 <script src="js/test.js"></script>
 <script src="js/controllers/search-contacts-controller.js"></script>
 <script src="js/services/supplier-services.js"></script>
