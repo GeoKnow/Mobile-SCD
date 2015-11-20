@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+<div ng-if="isLoading"><span>Loading...</span></div>
+<p ng-if="message">{{ message }}</p>
+<section class="contacts-list" ng-if="!isLoading">
+    <ul>
+        <li ng-repeat="contact in contacts">
+            <div class="contact-name">
+                <span>{{ contact.displayName }}</span>
+            </div>
+            <div class="contact-details">
+                <ul>
+                    <li ng-repeat="number in contact.phoneNumbers" ng-click="addNumber(number)">
+                        <p>{{ number.type }}</p>
+                        <p>{{ number.value }}</p>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</section>

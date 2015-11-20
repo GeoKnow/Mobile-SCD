@@ -23,6 +23,7 @@
         ctrl.idOrdersView = 2;
         ctrl.idMessagesView = 3;
         ctrl.idSearchContactsView = 4;
+        ctrl.idFromUriView = 5;
         ctrl.currentView = ctrl.idSuppliersView;
         ctrl.contextStack = [];
 
@@ -38,6 +39,9 @@
 
         ctrl.showOrders = true;
         ctrl.showShippings = true;
+
+        ctrl.uriPhones = [];
+        ctrl.uriLoading = false;
 
         ctrl.toggleLargeMap = function() {
             ctrl.showLargeMap = !ctrl.showLargeMap;
@@ -64,7 +68,12 @@
         };
         ctrl.pullFromURI = function($event) {
             $event.stopImmediatePropagation();
+            ctrl.contextStack.push({
+                supplier: ctrl.currentSupplier,
+                view: ctrl.currentView
+            });
             ctrl.modalCurrent = null;
+            ctrl.currentView = ctrl.idFromUriView;
         };
 
         ctrl.supTree = [];
@@ -695,6 +704,14 @@
             restrict: "E",
             templateUrl: "search-contacts.html",
             controller: "SearchContactsController"
+        }
+    });
+
+    app.directive("contactsFromUri", function() {
+        return {
+            restrict: "E",
+            templateUrl: "contacts-from-uri.html",
+            controller: "ContactsFromUriController"
         }
     });
 
