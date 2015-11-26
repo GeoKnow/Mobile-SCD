@@ -1,0 +1,13 @@
+{
+    "version": "2.0.0",
+    "name": "com.red_folder.phonegap.plugin.backgroundservice.sample",
+    "cordova_name": "Background Service Plugin - Sample Background Service",
+    "description": "\r\n        Sample service to demonstrate the use of the Cordova Android Background Service\r\n    ",
+    "license": "Apache 2.0 License",
+    "engines": [
+        {
+            "name": "cordova",
+            "version": ">=3.0.0"
+        }
+    ]
+}

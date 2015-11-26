@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.example.hello" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>MobileSCM</name>
+    <description>
+        Mobile version of the Supply Chain Dashboard.
+    </description>
+    <author email="vmijovic@gmail.com" href="http://cordova.io">
+        Vuk Mijović - Mihajlo Pupin Institute
+    </author>
+    <content src="index.html" />
+    <access origin="file://*" />
+    <access origin="file:///*" />
+    <access origin="*" />
+    <access origin="tel:*" launch-external="yes" />
+    <access origin="geo:*" launch-external="yes" />
+    <access origin="sms:*" launch-external="yes" />
+    <access origin="10.0.2.2" />
+    <access origin="http://10.0.2.2" />
+    <access origin="10.0.2.2:9000" />
+    <access origin="http://10.0.2.2:9000" />
+    <access origin="192.168.1.107" />
+    <access origin="http://192.168.1.107" />
+    <access origin="192.168.1.107:9000" />
+    <access origin="http://192.168.1.107:9000" />
+</widget>

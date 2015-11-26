@@ -1,0 +1,62 @@
+{
+    "de.appplant.cordova.plugin.local-notification": {
+        "source": {
+            "type": "registry",
+            "id": "de.appplant.cordova.plugin.local-notification"
+        }
+    },
+    "org.apache.cordova.device": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.device"
+        }
+    },
+    "org.apache.cordova.console": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.console"
+        }
+    },
+    "com.red_folder.phonegap.plugin.backgroundservice": {
+        "source": {
+            "type": "registry",
+            "id": "com.red_folder.phonegap.plugin.backgroundservice"
+        }
+    },
+    "com.red_folder.phonegap.plugin.backgroundservice.sample": {
+        "source": {
+            "type": "registry",
+            "id": "com.red_folder.phonegap.plugin.backgroundservice.sample"
+        }
+    },
+    "de.appplant.cordova.plugin.background-mode": {
+        "source": {
+            "type": "registry",
+            "id": "de.appplant.cordova.plugin.background-mode"
+        }
+    },
+    "com.neka.cordova.inappbrowser": {
+        "source": {
+            "type": "registry",
+            "id": "com.neka.cordova.inappbrowser"
+        }
+    },
+    "org.apache.cordova.inappbrowser": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.inappbrowser"
+        }
+    },
+    "org.apache.cordova.contacts": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.contacts"
+        }
+    },
+    "org.apache.cordova.dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.dialogs"
+        }
+    }
+}
