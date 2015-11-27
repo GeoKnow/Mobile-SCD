@@ -11,7 +11,7 @@
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
         "status": 2,
-        "product": "ProductX",
+        "product": "Rim",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -34,7 +34,7 @@
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
         "status": 2,
-        "product": "ProductX",
+        "product": "Wheel",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -58,7 +58,7 @@
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
         "status": 2,
-        "product": "ProductX",
+        "product": "Engine",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -94,7 +94,7 @@
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
         "status": 2,
-        "product": "ProductX",
+        "product": "Rim",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -117,7 +117,7 @@
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
         "status": 2,
-        "product": "ProductX",
+        "product": "Engine",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -141,7 +141,7 @@
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
         "status": 2,
-        "product": "ProductX",
+        "product": "Wheel",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -166,7 +166,7 @@
         "order": "http://www.xybermotive.com/message/7f216c2a-e756-47d4-ae71-d09122d89271",
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Wheel",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-02",
@@ -183,7 +183,7 @@
         "order": "http://www.xybermotive.com/message/3bb60288-26dd-4cbc-a09c-430e699de58d",
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
-        "product": "ProductX",
+        "product": "Rim",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-02",
@@ -199,7 +199,7 @@
         "order": "http://www.xybermotive.com/message/a61e1507-8319-4261-9467-a3a6c319aeb6",
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Engine",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-02",
@@ -216,7 +216,7 @@
         "order": "http://www.xybermotive.com/message/a61e1507-8319-4261-9467-a3a6c319aeb6",
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Engine",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-02",
@@ -245,7 +245,7 @@
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
         "status": 2,
-        "product": "ProductX",
+        "product": "Wheel",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -269,7 +269,7 @@
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
         "status": 2,
-        "product": "ProductX",
+        "product": "Engine",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -293,7 +293,7 @@
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
         "status": 2,
-        "product": "ProductX",
+        "product": "Rim",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -317,7 +317,7 @@
         "order": "http://www.xybermotive.com/message/d42d6fcb-ff42-494d-b309-d47720d31b55",
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Wheel",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-03",
@@ -334,7 +334,7 @@
         "order": "http://www.xybermotive.com/message/52f1564a-b470-489c-baf2-38c34fd7c617",
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
-        "product": "ProductX",
+        "product": "Rim",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-03",
@@ -350,7 +350,7 @@
         "order": "http://www.xybermotive.com/message/6415a72c-a4df-4a84-8a96-1cec90506e28",
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Engine",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-03",
@@ -367,7 +367,7 @@
         "order": "http://www.xybermotive.com/message/3bb60288-26dd-4cbc-a09c-430e699de58d",
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
-        "product": "ProductX",
+        "product": "Rim",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-03",
@@ -383,7 +383,7 @@
         "order": "http://www.xybermotive.com/message/d42d6fcb-ff42-494d-b309-d47720d31b55",
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Wheel",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-03",
@@ -412,7 +412,7 @@
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
         "status": 2,
-        "product": "ProductX",
+        "product": "Rim",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -435,7 +435,7 @@
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
         "status": 2,
-        "product": "ProductX",
+        "product": "Engine",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -459,7 +459,7 @@
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
         "status": 2,
-        "product": "ProductX",
+        "product": "Wheel",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -484,7 +484,7 @@
         "order": "http://www.xybermotive.com/message/392522d5-dbdc-4aed-9a34-a7186624f926",
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Engine",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-04",
@@ -501,7 +501,7 @@
         "order": "http://www.xybermotive.com/message/0bb17ce7-d09d-4a8b-b143-8ec48ecfb335",
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Wheel",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-04",
@@ -518,7 +518,7 @@
         "order": "http://www.xybermotive.com/message/d2360f37-b95c-4962-ad29-c1a7e1462efd",
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
-        "product": "ProductX",
+        "product": "Rim",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-04",
@@ -534,7 +534,7 @@
         "order": "http://www.xybermotive.com/message/7f216c2a-e756-47d4-ae71-d09122d89271",
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Wheel",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-04",
@@ -563,7 +563,7 @@
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
         "status": 2,
-        "product": "ProductX",
+        "product": "Wheel",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -587,7 +587,7 @@
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
         "status": 2,
-        "product": "ProductX",
+        "product": "Engine",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -611,7 +611,7 @@
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
         "status": 2,
-        "product": "ProductX",
+        "product": "Rim",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -635,7 +635,7 @@
         "order": "http://www.xybermotive.com/message/75750933-e728-4625-9707-5cd3e97c043e",
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Wheel",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-05",
@@ -652,7 +652,7 @@
         "order": "http://www.xybermotive.com/message/40f39e64-537c-42d3-a6b2-cfc9e97bcc96",
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Engine",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-05",
@@ -669,7 +669,7 @@
         "order": "http://www.xybermotive.com/message/07182f54-dd6c-4036-8c62-22cc0ccba2f8",
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
-        "product": "ProductX",
+        "product": "Rim",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-05",
@@ -697,7 +697,7 @@
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
         "status": 2,
-        "product": "ProductX",
+        "product": "Rim",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -720,7 +720,7 @@
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
         "status": 2,
-        "product": "ProductX",
+        "product": "Wheel",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -744,7 +744,7 @@
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
         "status": 2,
-        "product": "ProductX",
+        "product": "Engine",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -769,7 +769,7 @@
         "order": "http://www.xybermotive.com/message/eaba4e6d-f3d3-4166-b2bd-62ef9d23b505",
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
-        "product": "ProductX",
+        "product": "Rim",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-06",
@@ -785,7 +785,7 @@
         "order": "http://www.xybermotive.com/message/620e34cc-2a6c-4a0b-98c0-542d10163ecf",
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Engine",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-06",
@@ -802,7 +802,7 @@
         "order": "http://www.xybermotive.com/message/5e759b14-5d75-4ad4-98f6-d548d3e82b5b",
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Wheel",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-06",
@@ -831,7 +831,7 @@
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
         "status": 1,
-        "product": "ProductX",
+        "product": "Wheel",
         "remaining": 40,
         "tracked": false,
         "dateBroken": {
@@ -855,7 +855,7 @@
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
         "status": 2,
-        "product": "ProductX",
+        "product": "Rim",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -878,7 +878,7 @@
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
         "status": 2,
-        "product": "ProductX",
+        "product": "Engine",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -903,7 +903,7 @@
         "order": "http://www.xybermotive.com/message/5e940d5e-d941-41d3-abed-93b23b7dcdd5",
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Wheel",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-07",
@@ -920,7 +920,7 @@
         "order": "http://www.xybermotive.com/message/97a06b2e-0da9-4da8-bca5-f986e53efbd9",
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Engine",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-07",
@@ -937,7 +937,7 @@
         "order": "http://www.xybermotive.com/message/07182f54-dd6c-4036-8c62-22cc0ccba2f8",
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
-        "product": "ProductX",
+        "product": "Rim",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-07",
@@ -953,7 +953,7 @@
         "order": "http://www.xybermotive.com/message/5e940d5e-d941-41d3-abed-93b23b7dcdd5",
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Wheel",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-07",
@@ -970,7 +970,7 @@
         "order": "http://www.xybermotive.com/message/52f1564a-b470-489c-baf2-38c34fd7c617",
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
-        "product": "ProductX",
+        "product": "Rim",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-07",
@@ -986,7 +986,7 @@
         "order": "http://www.xybermotive.com/message/521277fd-bde7-4bf8-beff-d9ebf86dc446",
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
-        "product": "ProductX",
+        "product": "Rim",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-07",
@@ -1002,7 +1002,7 @@
         "order": "http://www.xybermotive.com/message/97a06b2e-0da9-4da8-bca5-f986e53efbd9",
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Engine",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-07",
@@ -1019,7 +1019,7 @@
         "order": "http://www.xybermotive.com/message/0bb17ce7-d09d-4a8b-b143-8ec48ecfb335",
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Wheel",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-07",
@@ -1048,7 +1048,7 @@
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
         "status": 2,
-        "product": "ProductX",
+        "product": "Rim",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -1071,7 +1071,7 @@
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
         "status": 2,
-        "product": "ProductX",
+        "product": "Engine",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -1095,7 +1095,7 @@
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
         "status": 1,
-        "product": "ProductX",
+        "product": "Wheel",
         "remaining": 40,
         "tracked": false,
         "dateBroken": {
@@ -1120,7 +1120,7 @@
         "order": "http://www.xybermotive.com/message/75750933-e728-4625-9707-5cd3e97c043e",
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Wheel",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-08",
@@ -1137,7 +1137,7 @@
         "order": "http://www.xybermotive.com/message/eaba4e6d-f3d3-4166-b2bd-62ef9d23b505",
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
-        "product": "ProductX",
+        "product": "Rim",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-08",
@@ -1153,7 +1153,7 @@
         "order": "http://www.xybermotive.com/message/d2360f37-b95c-4962-ad29-c1a7e1462efd",
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
-        "product": "ProductX",
+        "product": "Rim",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-08",
@@ -1169,7 +1169,7 @@
         "order": "http://www.xybermotive.com/message/9463f6ea-677e-45e0-a5c5-4f5c9062f070",
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Engine",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-08",
@@ -1198,7 +1198,7 @@
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
         "status": 1,
-        "product": "ProductX",
+        "product": "Wheel",
         "remaining": 40,
         "tracked": false,
         "dateBroken": {
@@ -1222,7 +1222,7 @@
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
         "status": 2,
-        "product": "ProductX",
+        "product": "Rim",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -1245,7 +1245,7 @@
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
         "status": 2,
-        "product": "ProductX",
+        "product": "Engine",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -1270,7 +1270,7 @@
         "order": "http://www.xybermotive.com/message/521277fd-bde7-4bf8-beff-d9ebf86dc446",
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
-        "product": "ProductX",
+        "product": "Rim",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-09",
@@ -1286,7 +1286,7 @@
         "order": "http://www.xybermotive.com/message/620e34cc-2a6c-4a0b-98c0-542d10163ecf",
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Engine",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-09",
@@ -1303,7 +1303,7 @@
         "order": "http://www.xybermotive.com/message/a0385647-4bc3-4127-bcc6-2da51b5a7995",
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Engine",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-09",
@@ -1320,7 +1320,7 @@
         "order": "http://www.xybermotive.com/message/547ca87a-e5d4-47ad-bb61-7ed95e1a55eb",
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
-        "product": "ProductX",
+        "product": "Rim",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-09",
@@ -1336,7 +1336,7 @@
         "order": "http://www.xybermotive.com/message/5e759b14-5d75-4ad4-98f6-d548d3e82b5b",
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Wheel",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-09",
@@ -1365,7 +1365,7 @@
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
         "status": 1,
-        "product": "ProductX",
+        "product": "Engine",
         "remaining": 10,
         "tracked": false,
         "dateBroken": {
@@ -1389,7 +1389,7 @@
         "connectionSourceId": "Conti",
         "connectionTargetId": "VW",
         "status": 1,
-        "product": "ProductX",
+        "product": "Wheel",
         "remaining": 40,
         "tracked": false,
         "dateBroken": {
@@ -1413,7 +1413,7 @@
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
         "status": 2,
-        "product": "ProductX",
+        "product": "Rim",
         "remaining": 0,
         "tracked": false,
         "dateBroken": {
@@ -1437,7 +1437,7 @@
         "order": "http://www.xybermotive.com/message/5033b0b5-c69f-4d75-8756-6159ad473b54",
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
-        "product": "ProductX",
+        "product": "Rim",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-10",
@@ -1453,7 +1453,7 @@
         "order": "http://www.xybermotive.com/message/a0837099-219b-4f4f-8b7b-27b34c71fa66",
         "connectionSourceId": "ZF",
         "connectionTargetId": "VW",
-        "product": "ProductX",
+        "product": "Engine",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-10",
@@ -1470,7 +1470,7 @@
         "order": "http://www.xybermotive.com/message/45250796-8bb7-4c66-b4b6-ee5b1c65869f",
         "connectionSourceId": "Schnellecke_Transportlogistik_GmbH",
         "connectionTargetId": "Conti",
-        "product": "ProductX",
+        "product": "Rim",
         "tracked": false,
         "dateBroken": {
           "date": "2010-01-10",
