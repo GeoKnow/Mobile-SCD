@@ -6,7 +6,7 @@
         <div class="os-header-content" ng-click="expanded = !expanded">
             <span>{{ s.connectionSourceId }}</span>
             <br>
-            <span>{{ s.connectionTargetId }}</span>
+            <span>{{ s.prettyDate() }}</span>
         </div>
         <div class="os-header-track">
             <i class="glyphicon glyphicon-link"></i>
@@ -15,18 +15,18 @@
     <div class="os-content" ng-if="expanded">
         <div class="os-content-row">
             <div class="os-content-prop">
-                <span>Product</span>
+                <span>Target</span>
             </div>
             <div class="os-content-val">
-                <span>{{ s.product }}</span>
+                <span>{{ s.connectionTargetId }}</span>
             </div>
         </div>
         <div class="os-content-row">
             <div class="os-content-prop">
-                <span>Date</span>
+                <span>Product</span>
             </div>
             <div class="os-content-val">
-                <span>{{ s.prettyDate() }}</span>
+                <span>{{ s.product }}</span>
             </div>
         </div>
         <div class="os-content-row">

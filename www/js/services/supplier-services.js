@@ -207,7 +207,7 @@ angular.module('mobile-scm')
         function addOrder(o) {
             // status values: 0 - in progress; 1 - overdue; 2 - completed
             o.status = 0;
-            o.product = "ProductX";
+            if (typeof o.product === 'undefined') o.product = "ProductX";
             o.remaining = o.count;
             o.tracked = false;
             o.dateBroken = getDateBroken(o.date);
@@ -228,7 +228,7 @@ angular.module('mobile-scm')
         }
 
         function addShipping(s) {
-            s.product = "ProductX";
+            if (typeof s.product === 'undefined') s.product = "ProductX";
             s.tracked = false;
             s.dateBroken = getDateBroken(s.date);
             s.prettyDate = function() {
@@ -265,7 +265,10 @@ angular.module('mobile-scm')
                 var sup = new Supplier("http://pupin.rs/geoknow/virtualSupplier", "Supply Chain Network");
                 var metrics = sup.metrics;
                 metrics["Troubled Suppliers"] = new Metric("Troubled Suppliers", "", 2, undefined, 0);
+                metrics["Average Delivery Time"] = new Metric("Average Delivery Time", " days", undefined, undefined, 2.55);
+                metrics["Average Delay"] = new Metric("Average Delay", " days", undefined, undefined, 0.61);
                 metrics["Total Parts Due"] = new Metric("Total Parts Due", "", undefined, undefined, 0);
+                metrics["Timeliness"] = new Metric("Timeliness", "%", undefined, undefined, 92.6);
                 virtualSupplier = sup; //TODO it would be better to have singleton virtual supplier and to require parent in createSupplier method
                 return sup;
             },
