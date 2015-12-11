@@ -36,6 +36,20 @@ angular.module('scm-notifications-phone', [])
                     data: { supplierCodename: supplier.codename }
                 });
             },
+            notifyOrder: function (message, title, order) {
+                if (!isPluginPresent()) {
+                    $log.error('Notification plugin is not present');
+                    return;
+                }
+                cordova.plugins.notification.local.schedule({
+                    id: 3,
+                    title: title,
+                    text: message,
+                    //message: message,
+                    //icon: "http://icons.com/?cal_id=1",
+                    data: { orderUri: order.uri }
+                });
+            },
             notifyGlobal: function(message, title) {
                 if (!isPluginPresent()) {
                     $log.error('Notification plugin is not present');

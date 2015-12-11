@@ -221,9 +221,12 @@
             // $('.sup-suppliers-items').css({ "display": "none" });
             ctrl.contextStack.push({
                 supplier: ctrl.currentSupplier,
-                view: ctrl.currentView
+                view: ctrl.currentView,
+                order: ctrl.currentOrder
             });
             ctrl.currentSupplier = sup;
+            ctrl.currentOrder = null;
+            ctrl.currentView = ctrl.idSuppliersView;
             ctrl.showOrders = true;
             ctrl.showShippings = true;
             if (closeSnap) $scope.snapper.close();
@@ -235,6 +238,26 @@
                 view: ctrl.currentView,
                 order: ctrl.currentOrder
             });
+            ctrl.currentOrder = order;
+            order.expanded = false;
+            ctrl.currentView = ctrl.idOrdersView;
+            // highlight the order and scroll to it
+            $timeout(function() {
+                order.expanded = true;
+                var elemToHighlight = order.elem;
+                // is it visible and scroll if not
+                // no need to scroll since that happens on expansion which is done above
+                // made sure that expansions happens by setting expanded to false then true
+                // TODO: no dirty tricks, if previous view was supplier view and order was expanded scroll to it
+                // highlight for a moment
+                //$(elemToHighlight).css("outline", "3px solid red");
+                $(elemToHighlight).css("background-color", "#57C3E7");
+                $(elemToHighlight).animate({
+                    'background-color': '#FFFFFF'
+                }, 2000, function() {
+                    //$(elemToHighlight).css("outline","none");
+                });
+            }, 0);
         };
 
         ctrl.back = function() {
@@ -277,7 +300,7 @@
                     if (newVal === 2) status = "completed";
                     var msg = 'Order of ' + s.product + '(s) from ' + s.connectionSourceId + ' to ' +
                         s.connectionTargetId + ' is ' + status;
-                    notifier.notifyGlobal(msg, 'Order Update');
+                    notifier.notifyOrder(msg, 'Order Update', s);
                 });
             }
         };
@@ -416,9 +439,23 @@
 
         ctrl.switchToView = function(view) {
             if (ctrl.currentView !== view) {
+                ctrl.contextStack.push({
+                    supplier: ctrl.currentSupplier,
+                    view: ctrl.currentView,
+                    order: ctrl.currentOrder
+                });
+                ctrl.currentOrder = null;
                 ctrl.currentView = view;
             }
             $scope.snapper.close();
+        };
+
+        ctrl.findOrderByUri = function(orderArray, uri) {
+            for (var i=0; i<orderArray.length; i++) {
+                var curOrder = orderArray[i];
+                if (curOrder.uri == uri) return curOrder;
+            }
+            return null;
         };
 
         ctrl.dashboardHost = params.dashboard;
@@ -446,14 +483,26 @@
                     cordova.plugins.notification.local.on('click', function (notification) {
                         $log.debug('User tapped a notification');
                         $log.debug(notification);
+                        var notificationId = notification.id;
                         var parsedData = JSON.parse(notification.data);
-                        try {
-                            var newSupplier = ctrl.findSupplierByCodename(ctrl.supTree, parsedData.supplierCodename);
-                            if (newSupplier !== null) $scope.$apply(function() { ctrl.currentSupplier = newSupplier; });
-                        } catch (error) {
-                            $log.error(error);
-                            $log.error('Couldn\'t set new supplier, expected data object with currentSupplier property, got:');
-                            $log.error(parsedData);
+                        if (notificationId == 2) {
+                            try {
+                                var newSupplier = ctrl.findSupplierByCodename(ctrl.supTree, parsedData.supplierCodename);
+                                if (newSupplier !== null) $scope.$apply(function() { ctrl.currentSupplier = newSupplier; });
+                            } catch (error) {
+                                $log.error(error);
+                                $log.error('Couldn\'t set new supplier, expected data object with currentSupplier property, got:');
+                                $log.error(parsedData);
+                            }
+                        } else if (notificationId == 3) {
+                            try {
+                                var selectedOrder = ctrl.findOrderByUri(ctrl.orders, parsedData.orderUri);
+                                if (selectedOrder !== null) $scope.$applyAsync(function() { ctrl.selectOrder(selectedOrder) });
+                            } catch (error) {
+                                $log.error(error);
+                                $log.error('Couldn\'t switch to selected order, expected data object with orderUri property, got:');
+                                $log.error(parsedData);
+                            }
                         }
                     });
                     //$log.info('Adding notification trigger listener');
@@ -712,6 +761,14 @@
             restrict: "E",
             templateUrl: "contacts-from-uri.html",
             controller: "ContactsFromUriController"
+        }
+    });
+
+    app.directive("assignElem", function() {
+        return {
+            link: function(scope, element) {
+                scope.o.elem = element;
+            }
         }
     });
 

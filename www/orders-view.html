@@ -1,9 +1,9 @@
-<div class="os-block" ng-repeat="o in sups.orders" ng-init="expanded = false">
+<div class="os-block" ng-repeat="o in sups.orders" ng-init="o.expanded = false" assign-elem>
     <div class="os-header">
         <div class="os-header-icon">
             <i class="glyphicon" ng-class="{ 'glyphicon-check': o.status === 2, 'glyphicon-alert': o.status === 1, 'glyphicon-transfer': o.status === 0 }"></i>
         </div>
-        <div class="os-header-content" ng-click="expanded = !expanded">
+        <div class="os-header-content" ng-click="o.expanded = !o.expanded">
             <span>{{ o.connectionSourceId }}</span>
             <br>
             <span>{{ o.prettyDate() }}</span>
@@ -12,7 +12,7 @@
             <i class="glyphicon glyphicon-star" ng-click="sups.trackShipping(o)" ng-class="{ 'selected': o.tracked }"></i>
         </div>
     </div>
-    <div class="os-content" ng-if="expanded">
+    <div class="os-content" ng-if="o.expanded">
         <div class="os-content-row">
             <div class="os-content-prop">
                 <span>Target</span>

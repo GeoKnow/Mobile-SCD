@@ -7,7 +7,7 @@
 // scm-notifications-{web,phone}
 // scm-comm-{sim,brox}
 
-var parametersModule = 'scm-parameters-geoknow';
+var parametersModule = 'scm-parameters-hotspot';
 var notificationsModule = 'scm-notifications-phone';
 var messagingModule = 'scm-comm-sim';
 
