@@ -248,7 +248,7 @@
                 // is it visible and scroll if not
                 // no need to scroll since that happens on expansion which is done above
                 // made sure that expansions happens by setting expanded to false then true
-                // TODO: no dirty tricks, if previous view was supplier view and order was expanded scroll to it
+                // TODO: no dirty tricks, if previous view was orders view and order was expanded scroll to it
                 // highlight for a moment
                 //$(elemToHighlight).css("outline", "3px solid red");
                 $(elemToHighlight).css("background-color", "#57C3E7");
