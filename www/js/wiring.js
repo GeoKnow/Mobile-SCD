@@ -7,9 +7,9 @@
 // scm-notifications-{web,phone}
 // scm-comm-{sim,brox}
 
-var parametersModule = 'scm-parameters-hotspot';
+var parametersModule = 'scm-parameters-local';
 var notificationsModule = 'scm-notifications-phone';
-var messagingModule = 'scm-comm-sim';
+var messagingModule = 'scm-comm-brox';
 
 angular.module("scm-comm-brox", [parametersModule]);
 angular.module("scm-comm-sim", []);

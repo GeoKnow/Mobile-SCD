@@ -76,127 +76,21 @@
             ctrl.currentView = ctrl.idFromUriView;
         };
 
-        ctrl.supTree = [];
-        ctrl.virtualSupplier = {
-            parent: null,
-            name: "Supply Chain Network",
-            suppliers: []
-        };
+        ctrl.virtualSupplier = supplierService.createVirtualSupplier();
         ctrl.currentSupplier = ctrl.virtualSupplier;
         ctrl.currentOrder = null;
         ctrl.currentMetric = {};
 
         ctrl.searchPhrase = "";
-        ctrl.curSup = null;
-        ctrl.curLevel = -1;
-        ctrl.suppliers = [];
-        ctrl.topSuppliers = [];
         ctrl.suppliersArray = [];
-        ctrl.currentSuppliers = [];
 
-        ctrl.defaultGraph = params.graph;
-        ctrl.defaultGraphParam = "default-graph-uri";
-        //ctrl.defaultEndpoint = "http://p2.eccenca.com:11180/sparql";
-        ctrl.defaultEndpoint = params.endpoint;
-        ctrl.topLevelQuery = "PREFIX xmo: <http://www.xybermotive.com/ontology/> \
-            PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> \
-            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#l> \
-\
-            SELECT DISTINCT ?supplier ?lat ?long ?city ?name ?street ?zip ?label \
-            WHERE { \
-              ?supplier a xmo:Supplier . \n\
-              OPTIONAL { ?supplier geo:lat ?lat . } \
-              OPTIONAL { ?supplier geo:long ?long . } \
-              OPTIONAL { ?supplier xmo:city ?city . } \
-              OPTIONAL { ?supplier xmo:name ?name . } \
-              OPTIONAL { ?supplier xmo:street ?street . } \
-              OPTIONAL { ?supplier xmo:zipcode ?zip . } \
-              OPTIONAL { ?supplier rdfs:label ?label . } \
-              FILTER NOT EXISTS { \
-                ?conn xmo:sender ?supplier . \
-              } \
-            }";
-            //default-graph-uri=http%3A%2F%2Fmobile-scm%2Fdump%2F&
-        ctrl.q = ctrl.defaultEndpoint + "?default-graph-uri=" + encodeURIComponent(ctrl.defaultGraph) + "&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel%0D%0AWHERE+%7B%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Alat+%3Flat+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Along+%3Flong+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Acity+%3Fcity+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Aname+%3Fname+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+%7D%0D%0A++FILTER+NOT+EXISTS+%7B%0D%0A++++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A++%7D%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0";
-        ctrl.q2 = ctrl.defaultEndpoint + "?default-graph-uri=" + encodeURIComponent(ctrl.defaultGraph) + "&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel%0D%0AWHERE+%7B%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Alat+%3Flat+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Along+%3Flong+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Acity+%3Fcity+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Aname+%3Fname+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+%7D%0D%0A++FILTER+NOT+EXISTS+%7B%0D%0A++++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A++%7D%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on";
-        //ctrl.q = "http://p2.eccenca.com:11180/sparql?callback=JSON_CALLBACK&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel%0D%0AWHERE+%7B%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Alat+%3Flat+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Along+%3Flong+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Acity+%3Fcity+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Aname+%3Fname+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+%7D%0D%0A++FILTER+NOT+EXISTS+%7B%0D%0A++++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A++%7D%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0";
-        //ctrl.q2 = 'http://p2.eccenca.com:11180/sparql?callback=JSON_CALLBACK&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel%0D%0AWHERE+%7B%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Alat+%3Flat+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+geo%3Along+%3Flong+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Acity+%3Fcity+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Aname+%3Fname+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+%7D%0D%0A++OPTIONAL+%7B+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+%7D%0D%0A++FILTER+NOT+EXISTS+%7B%0D%0A++++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A++%7D%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
+        function replacerForSupplierTree(key, val) {
+            if (key == "parent") return undefined;
+            return val;
+        }
 
-        ctrl.qShowSupplier = function(supplier) {
-            //return "http://p2.eccenca.com:11180/sparql?callback=JSON_CALLBACK&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E+%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E+%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E+%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel+%0D%0AWHERE+{+%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.+%0D%0A++OPTIONAL+{+%3Fsupplier+geo%3Alat+%3Flat+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+geo%3Along+%3Flong+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Acity+%3Fcity+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Aname+%3Fname+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+}+%0D%0A++%3Fconn+xmo%3Areceiver+%3C" +
-            //        encodeURIComponent(supplier.uri) +
-            //        "%3E+.+%0D%0A++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A}&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on";
-            return ctrl.defaultEndpoint + "?default-graph-uri=" + encodeURIComponent(ctrl.defaultGraph) + "&query=PREFIX+xmo%3A+%3Chttp%3A%2F%2Fwww.xybermotive.com%2Fontology%2F%3E+%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E+%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23l%3E+%0D%0A%0D%0ASELECT+DISTINCT+%3Fsupplier+%3Flat+%3Flong+%3Fcity+%3Fname+%3Fstreet+%3Fzip+%3Flabel+%0D%0AWHERE+{+%0D%0A++%3Fsupplier+a+xmo%3ASupplier+.+%0D%0A++OPTIONAL+{+%3Fsupplier+geo%3Alat+%3Flat+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+geo%3Along+%3Flong+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Acity+%3Fcity+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Aname+%3Fname+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Astreet+%3Fstreet+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+xmo%3Azipcode+%3Fzip+.+}+%0D%0A++OPTIONAL+{+%3Fsupplier+rdfs%3Alabel+%3Flabel+.+}+%0D%0A++%3Fconn+xmo%3Areceiver+%3C" +
-                encodeURIComponent(supplier.uri) +
-                "%3E+.+%0D%0A++%3Fconn+xmo%3Asender+%3Fsupplier+.%0D%0A}&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on";
-        };
-
-        ctrl.doWork = function(sup) {
-            // use jsonp with BROX's endpoint
-            $http.get(ctrl.qShowSupplier(sup)).success(function(data){
-                var results = data.results.bindings;
-                var supList = [];
-                for (var s in results) {
-                    var r = results[s];
-                    var supplier = supplierService.createSupplier(
-                        r.supplier.value, r.name.value, r.lat.value, r.long.value,
-                        r.city.value, r.street.value, r.zip.value
-                    );
-                    supplier.parent = sup;
-                    $log.info('Found supplier: ' + supplier.name);
-                    supList.push(supplier);
-                }
-                $timeout(function(){
-                    sup.suppliers = supList;
-                    ctrl.suppliersArray.push(sup);
-                    if (sup.suppliers !== null && sup.suppliers.length > 0)
-                        ctrl.populateTree(sup.suppliers);
-                }, 0);
-            }).error(function(data){
-                alert("Error: " + data);
-                sup.suppliers = null;
-            });
-        };
-
-        ctrl.populateTree = function (sups) {
-            for (var i in sups) {
-                ctrl.doWork(sups[i]);
-            }
-        };
-
-        ctrl.getSuppliersTree = function() {
-            ctrl.supTree = [];
-            ctrl.virtualSupplier = supplierService.createVirtualSupplier();
-            ctrl.currentSupplier = ctrl.virtualSupplier;
-            // use jsonp with BROX's endpoint
-            $http.get(ctrl.q2).success(function(data){
-                var results = data.results.bindings;
-//                alert("Success: " + JSON.stringify(results));
-                var sups = [];
-                for (var s in results) {
-                    var r = results[s];
-                    if (r.lat && r.long
-                            && r.city && r.name
-                            && r.street && r.zip
-                            && r.supplier) {
-                        var supplier = supplierService.createSupplier(
-                            r.supplier.value, r.name.value, r.lat.value, r.long.value,
-                            r.city.value, r.street.value, r.zip.value
-                        );
-                        supplier.parent = ctrl.virtualSupplier;
-                        sups.push(supplier);
-                    }
-                }
-                $timeout(function (){
-                    ctrl.supTree = sups;
-                    ctrl.virtualSupplier.suppliers = sups;
-//                    ctrl.populateTree(ctrl.supTree);
-                    ctrl.populateTree(ctrl.virtualSupplier.suppliers);
-                }, 0);
-            }).error(function(data){
-                alert("Error: " + data);
-                return null;
-            });
+        ctrl.refresh = function() {
+            msgProvider.populateNetworkInfo(ctrl.virtualSupplier, ctrl.suppliersArray);
         };
 
         ctrl.removeNumber = function(numberString, numberIndex) {
@@ -305,6 +199,11 @@
             }
         };
 
+        ctrl.evaluateMetric = function (metric) {
+            metric.calcAndSetStatus();
+            return true;
+        };
+
         ctrl.notify = function (metric) {
             if (ctrl.evaluateMetric(metric)) return;
             var message = 'Metric ' + metric.name + ' is violated';
@@ -350,13 +249,11 @@
         };
 
         ctrl.isShippingIncoming = function(s) {
-            if (ctrl.currentSupplier.codename === s.connectionTargetId) return true;
-            return false;
+            return (ctrl.currentSupplier.codename === s.connectionTargetId);
         };
 
         ctrl.isOrderIncoming = function(o) {
-            if (ctrl.currentSupplier.codename === o.connectionTargetId) return true;
-            return false;
+            return (ctrl.currentSupplier.codename === o.connectionTargetId);
         };
 
         ctrl.getOther = function(s) {
@@ -400,7 +297,7 @@
             }
 
             for (var prop in msg.data.dueParts) {
-                var supplier = ctrl.findSupplierByCodename(ctrl.supTree, prop);
+                var supplier = ctrl.findSupplierByCodename(ctrl.virtualSupplier.suppliers, prop);
                 if (supplier !== null) {
                     var value = msg.data.dueParts[prop];
                     $log.info('Due parts for ' + supplier.name + ': ' + value);
@@ -458,8 +355,6 @@
             return null;
         };
 
-        ctrl.dashboardHost = params.dashboard;
-
         $document.on('deviceready', function() {
             $document.on("backbutton", function() {
                 $scope.$applyAsync(function () {
@@ -487,7 +382,7 @@
                         var parsedData = JSON.parse(notification.data);
                         if (notificationId == 2) {
                             try {
-                                var newSupplier = ctrl.findSupplierByCodename(ctrl.supTree, parsedData.supplierCodename);
+                                var newSupplier = ctrl.findSupplierByCodename(ctrl.virtualSupplier.suppliers, parsedData.supplierCodename);
                                 if (newSupplier !== null) $scope.$apply(function() { ctrl.currentSupplier = newSupplier; });
                             } catch (error) {
                                 $log.error(error);
