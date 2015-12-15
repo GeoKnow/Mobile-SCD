@@ -254,7 +254,14 @@ angular.module('mobile-scm')
         return {
             createSupplier: function(uri, name, latitude, longitude, city, street, zipcode) {
                 if (typeof uri != "string") {
-                    // TODO: create supplier based on an object (acquired from localStorage)
+                    var sup = new Supplier(uri.uri, uri.name, uri.latitude, uri.longitude, uri.city, uri.street, uri.zipcode);
+                    var metrics = sup.metrics;
+                    metrics["Average Delivery Time"] = new Metric("Average Delivery Time", " days", 3, undefined, 2.55);
+                    metrics["Average Delay"] = new Metric("Average Delay", " days", 1, undefined, 0.61);
+                    metrics["Timeliness"] = new Metric("Timeliness", "%", undefined, 92, 92.6);
+                    metrics["Parts Due"] = new Metric("Parts Due", " parts", 500, undefined, 0);
+                    // TODO: read numbers, maybe also orders and shipments
+                    return sup;
                 } else {
                     var sup = new Supplier(uri, name, latitude, longitude, city, street, zipcode);
                     var metrics = sup.metrics;
@@ -281,6 +288,8 @@ angular.module('mobile-scm')
             addShipping: addShipping,
             setCurDateString: setCurDateString,
             getOrders: function() { return orders; },
-            getShippings: function() { return shippings; }
+            getShippings: function() { return shippings; },
+            clearOrders: function() { while (orders.length > 0) orders.pop(); },
+            clearShippings: function() { while (shippings.length > 0) shippings.pop(); }
         }
 });

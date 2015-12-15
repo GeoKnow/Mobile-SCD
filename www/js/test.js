@@ -89,7 +89,24 @@
             return val;
         }
 
+        function resetMetric(metric, value) {
+            metric.thresholdMax = undefined;
+            metric.thresholdMin = undefined;
+            metric.value = value;
+        }
+
         ctrl.refresh = function() {
+            ctrl.currentSupplier = ctrl.virtualSupplier;
+            while (ctrl.virtualSupplier.suppliers.length > 0) ctrl.virtualSupplier.suppliers.pop();
+            var metrics = ctrl.virtualSupplier.metrics;
+            resetMetric(metrics["Troubled Suppliers"], 0);
+            metrics["Troubled Suppliers"].thresholdMax = 2;
+            resetMetric(metrics["Average Delivery Time"], 2.55);
+            resetMetric(metrics["Average Delay"], 0.61);
+            resetMetric(metrics["Total Parts Due"], 0);
+            resetMetric(metrics["Timeliness"], 92.6);
+            supplierService.clearOrders();
+            supplierService.clearShippings();
             msgProvider.populateNetworkInfo(ctrl.virtualSupplier, ctrl.suppliersArray);
         };
 

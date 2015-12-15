@@ -132,15 +132,109 @@
     }]);
 
     var commSim = angular.module("scm-comm-sim");
-    commSim.factory("msgProvider", ['$timeout', function($timeout) {
+    commSim.factory("msgProvider", ['$timeout', 'supplierService', function($timeout, supplierService) {
         var msgs = null;
         $.getJSON('json/msgs-data.json', {}, function(data, status) {
             msgs = data;
         });
         var curIndex = 0;
 
+        var network = {
+            "name":"Supply Chain Network",
+            "uri":"http://pupin.rs/geoknow/virtualSupplier",
+            "codename":"virtualSupplier",
+            "suppliers":[
+                {
+                    "latitude":"52.43014144897461",
+                    "longitude":"10.763409614562988",
+                    "city":"Wolfsburg",
+                    "name":"Volkswagen AG",
+                    "street":"Berliner Ring 2",
+                    "zipcode":"38440",
+                    "uri":"http://www.xybermotive.com/supplier/VW",
+                    "codename":"VW",
+                    "suppliers":[
+                        {
+                            "latitude":"52.38988494873047",
+                            "longitude":"9.730560302734375",
+                            "city":"Hanover",
+                            "name":"Continental AG",
+                            "street":"Vahrenwalder Straße 9",
+                            "zipcode":"30165",
+                            "uri":"http://www.xybermotive.com/supplier/Conti",
+                            "codename":"Conti",
+                            "suppliers":[
+                                {
+                                    "latitude":"52.31557846069336",
+                                    "longitude":"10.49278450012207",
+                                    "city":"Braunschweig",
+                                    "name":"Schnellecke Transportlogistik GmbH",
+                                    "street":"Hansestrasse 60",
+                                    "zipcode":"38112",
+                                    "uri":"http://www.xybermotive.com/supplier/Schnellecke_Transportlogistik_GmbH",
+                                    "codename":"Schnellecke_Transportlogistik_GmbH",
+                                    "suppliers":[],
+                                    "hasIssues":false,
+                                    "numbers":[],
+                                    "$$hashKey":"object:89"
+                                }
+                            ],
+                            "hasIssues":true,
+                            "numbers":[],
+                            "$$hashKey":"object:67"
+                        },
+                        {
+                            "latitude":"47.66756820678711",
+                            "longitude":"9.493419647216797",
+                            "city":"Friedrichshafen",
+                            "name":"ZF Friedrichshafen AG",
+                            "street":"Graf-von-Soden-Platz 1",
+                            "zipcode":"88046",
+                            "uri":"http://www.xybermotive.com/supplier/ZF",
+                            "codename":"ZF",
+                            "suppliers":[],
+                            "hasIssues":false,
+                            "numbers":[],
+                            "$$hashKey":"object:68"
+                        }
+                    ],
+                    "hasIssues":false,
+                    "numbers":[],
+                    "$$hashKey":"object:10"
+                },
+                {
+                    "latitude":"0.0",
+                    "longitude":"0.0",
+                    "city":"",
+                    "name":"OEM",
+                    "street":"",
+                    "zipcode":"",
+                    "uri":"http://www.xybermotive.com/supplier/OEM",
+                    "codename":"OEM",
+                    "suppliers":[],
+                    "hasIssues":false,
+                    "numbers":[],
+                    "$$hashKey":"object:11"
+                }
+            ],
+            "hasIssues":false,
+            "numbers":[]
+        };
+
+        function populateSupplier(target, source, supArray) {
+            if (source.suppliers.length === 0) return;
+            for (var i=0; i<source.suppliers.length; i++) {
+                var supplier = source.suppliers[i];
+                var newSupplier = supplierService.createSupplier(supplier.uri, supplier.name, supplier.latitude, supplier.longitude, supplier.city, supplier.street, supplier.zipcode);
+                target.suppliers.push(newSupplier);
+                newSupplier.parent = target;
+                supArray.push(newSupplier);
+                populateSupplier(newSupplier, supplier, supArray);
+            }
+        }
+
         function populateNetworkInfo(virtSup, supArray) {
-            // TODO: do a mock population
+            populateSupplier(virtSup, network, supArray);
         }
 
         return {

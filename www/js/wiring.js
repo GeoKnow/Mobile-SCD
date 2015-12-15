@@ -9,7 +9,7 @@
 
 var parametersModule = 'scm-parameters-local';
 var notificationsModule = 'scm-notifications-phone';
-var messagingModule = 'scm-comm-brox';
+var messagingModule = 'scm-comm-sim';
 
 angular.module("scm-comm-brox", [parametersModule]);
 angular.module("scm-comm-sim", []);
