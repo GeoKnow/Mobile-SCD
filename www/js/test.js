@@ -43,6 +43,8 @@
         ctrl.uriPhones = [];
         ctrl.uriLoading = false;
 
+        ctrl.allowSupplierAnimations = true;
+
         ctrl.toggleLargeMap = function() {
             ctrl.showLargeMap = !ctrl.showLargeMap;
             $log.debug('Map toggled');
@@ -129,7 +131,7 @@
         };
 
         ctrl.selectSupplier = function(sup, closeSnap) {
-            // $('.sup-suppliers-items').css({ "display": "none" });
+            ctrl.allowSupplierAnimations = false;
             ctrl.contextStack.push({
                 supplier: ctrl.currentSupplier,
                 view: ctrl.currentView,
@@ -141,6 +143,7 @@
             ctrl.showOrders = true;
             ctrl.showShippings = true;
             if (closeSnap) $scope.snapper.close();
+            $timeout(function() { ctrl.allowSupplierAnimations = true; }, 0);
         };
 
         ctrl.selectOrder = function(order) {
@@ -370,6 +373,14 @@
                 if (curOrder.uri == uri) return curOrder;
             }
             return null;
+        };
+
+        ctrl.toggleOrders = function() {
+            ctrl.showOrders = !ctrl.showOrders;
+        };
+
+        ctrl.toggleShippings = function() {
+            ctrl.showShippings = !ctrl.showShippings;
         };
 
         $document.on('deviceready', function() {
@@ -684,7 +695,7 @@
         }
     });
 
-    app.animation(".sup-block-content", function() {
+    app.animation(".animation-allowed", function() {
         return {
             enter: function(element, done) {
                 console.log('Entering');

@@ -111,10 +111,10 @@
 </div>
 
 <div class="sup-block" ng-if="sups.currentSupplier.orders.length > 0">
-    <div class="sup-block-header" ng-click="sups.showOrders = !sups.showOrders">
+    <div class="sup-block-header" ng-click="sups.toggleOrders()">
         <span>Orders</span>
     </div>
-    <div class="sup-block-content" ng-if="sups.showOrders">
+    <div class="sup-block-content" ng-class="{ 'animation-allowed': sups.allowSupplierAnimations }" ng-if="sups.showOrders">
         <div class="sup-shipping" ng-repeat="o in sups.currentSupplier.orders" ng-class="{ 'sup-shipping-completed': o.status === 2, 'sup-shipping-overdue': o.status === 1 }">
             <div class="sup-shipping-icon">
                 <i class="glyphicon" ng-class="{ 'glyphicon-arrow-left': sups.isOrderIncoming(o), 'glyphicon-arrow-right': !sups.isOrderIncoming(o) }"></i>
@@ -128,10 +128,10 @@
 </div>
 
 <div class="sup-block" ng-if="sups.currentSupplier.shippings.length > 0">
-    <div class="sup-block-header" ng-click="sups.showShippings = !sups.showShippings">
+    <div class="sup-block-header" ng-click="sups.toggleShippings()">
         <span>Shippings</span>
     </div>
-    <div class="sup-block-content" ng-if="sups.showShippings">
+    <div class="sup-block-content" ng-class="{ 'animation-allowed': sups.allowSupplierAnimations }" ng-if="sups.showShippings">
         <div class="sup-shipping" ng-repeat="s in sups.currentSupplier.shippings">
             <div class="sup-shipping-icon">
                 <i class="glyphicon" ng-class="{ 'glyphicon-arrow-left': sups.isShippingIncoming(s), 'glyphicon-arrow-right': !sups.isShippingIncoming(s) }"></i>
