@@ -251,6 +251,10 @@ angular.module('mobile-scm')
             }
         }
 
+        function getOrderByUri(orderUri) {
+            return ordersMap[orderUri];
+        }
+
         return {
             createSupplier: function(uri, name, latitude, longitude, city, street, zipcode) {
                 if (typeof uri != "string") {
@@ -290,6 +294,7 @@ angular.module('mobile-scm')
             getOrders: function() { return orders; },
             getShippings: function() { return shippings; },
             clearOrders: function() { while (orders.length > 0) orders.pop(); },
-            clearShippings: function() { while (shippings.length > 0) shippings.pop(); }
+            clearShippings: function() { while (shippings.length > 0) shippings.pop(); },
+            getOrderByUri: getOrderByUri
         }
 });

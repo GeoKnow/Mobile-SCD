@@ -146,6 +146,11 @@
             $timeout(function() { ctrl.allowSupplierAnimations = true; }, 0);
         };
 
+        ctrl.selectOrderByUri = function(orderUri) {
+            var order = supplierService.getOrderByUri(orderUri);
+            if (order) ctrl.selectOrder(order);
+        };
+
         ctrl.selectOrder = function(order) {
             ctrl.contextStack.push({
                 supplier: ctrl.currentSupplier,
@@ -388,6 +393,12 @@
                 $scope.$applyAsync(function () {
                     ctrl.back();
                 });
+            });
+            $document.on("pause", function() {
+                $log.debug("Application paused");
+            });
+            $document.on("resume", function() {
+                $log.debug("Application resumed");
             });
             if (typeof cordova !== 'undefined') {
                 $log.info('Initializing contacts');
