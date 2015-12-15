@@ -181,7 +181,7 @@
 
         ctrl.levelUp = function() {
             if (ctrl.currentSupplier.parent !== null) {
-                ctrl.currentSupplier = ctrl.currentSupplier.parent;
+                ctrl.selectSupplier(ctrl.currentSupplier.parent);
             }
         };
 
