@@ -29,7 +29,7 @@ Since the application depends on the Supply Chain Simulator which is a confident
 the default configuration uses mock simulator with a pre-defined scenario. To run the application on top of live
 infrastructure, create your own parameters module in [parameters.js](www/js/services/parameters.js) by copying
 one of the existing modules and changing the module name and parameter values (e.g. endpoint and dashboard URL).
-After that, adjust parametersModule variable in [wirings.js](www/js/wirings.js) to point to you newly created module,
+After that, adjust parametersModule variable in [wiring.js](www/js/wiring.js) to point to you newly created module,
 and set the messagingModule variable to _scm-comm-real_.
 Download a pre-built package
 ---
