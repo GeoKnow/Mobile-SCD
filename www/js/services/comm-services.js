@@ -13,7 +13,7 @@
         callbacks.splice(index, 1);
     }
 
-    var commBrox = angular.module("scm-comm-brox");
+    var commBrox = angular.module("scm-comm-live");
     commBrox.factory("msgProvider", ['$http', '$log', '$document', '$window', '$timeout', 'scmParameters', 'supplierService', function($http, $log, $document, $window, $timeout, scmParameters, supplierService) {
 
         $document.on('deviceready', function() {
